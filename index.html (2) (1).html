@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroGlass Nédroma | Quantum Architecture & Smart Glazing</title>
+    
+    <!-- SEO Optimization -->
+    <meta name="description" content="Découvrez le futur de l'architecture éco-responsable avec ElectroGlass Nédroma. Technologie de verre électrochromique de classe mondiale conçue en Algérie.">
+    <meta name="keywords" content="verre intelligent, électrochromique, Apple design, architecture durable, Nédroma, Tlemcen, Amina Ichou, Smart City, Vercel, GitHub Pages">
+    <meta name="author" content="Amina Ichou">
+
+    <!-- Fonts: Inter for high-tech premium elegance & Cairo for seamless Arabic integration -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS Frameworks & Animation Engines -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Three.js (3D Graphics Rendering Engines) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- Tailwind Config for Futuristic Dark Aesthetics -->
+    <script>
+        window.tailwind = {
+            config: {
+                darkMode: 'class',
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'Cairo', 'sans-serif'],
+                        },
+                        colors: {
+                            brand: {
+                                50: '#f0f7ff',
+                                100: '#e0effe',
+                                500: '#0084ff',
+                                600: '#006cd4',
+                                900: '#030712',
+                                950: '#020617',
+                            },
+                            cyanAccent: '#00f2fe',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Apple/Tesla-style Glassmorphism */
+        .apple-blur {
+            background: rgba(10, 15, 30, 0.65);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .apple-blur-light {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        /* Continuous Ambient Light Glow */
+        .neon-glow {
+            box-shadow: 0 0 40px rgba(0, 132, 255, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Premium Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 242, 254, 0.3);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 242, 254, 0.6);
+        }
+
+        /* Before/After Split Slider Component */
+        .split-slider-container {
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+        .split-slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #00f2fe;
+            cursor: ew-resize;
+            z-index: 30;
+            box-shadow: 0 0 15px #00f2fe;
+        }
+        .split-slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #020617;
+            border: 2px solid #00f2fe;
+            color: #00f2fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+            font-size: 18px;
+        }
+
+        /* Cinematic Mask and Text Gradients */
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 30%, #a5f3fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cyan-text-gradient {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Keyboard Access Focus Rules (WCAG 2.2 Compliance) */
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+            outline: 3px solid #00f2fe;
+            outline-offset: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 dark:bg-brand-950 transition-colors duration-500 selection:bg-cyan-400 selection:text-slate-950">
+
+    <!-- Premium Cinematic Header Navigation -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 apple-blur border-b border-white/5 transition-all duration-500 py-4">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between">
+            <!-- Sleek Logo Design -->
+            <a href="#" class="flex items-center space-x-3 group" aria-label="ElectroGlass Nédroma Enterprise Logo">
+                <div class="relative w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-500 to-cyanAccent flex items-center justify-center text-slate-950 font-black shadow-lg shadow-cyanAccent/20">
+                    <i class="ph ph-shield-checkered text-xl"></i>
+                    <span class="absolute inset-0 rounded-xl border border-white/30 animate-pulse"></span>
+                </div>
+                <div class="text-left">
+                    <span class="text-lg font-black tracking-tight block text-white group-hover:text-cyanAccent transition-colors">ElectroGlass</span>
+                    <span class="text-[9px] font-bold text-cyanAccent block tracking-widest uppercase">Nédroma • Enterprise</span>
+                </div>
+            </a>
+
+            <!-- High-Tech Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-1" aria-label="Global Directory">
+                <a href="#home" class="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/5 transition-all">Home</a>
+                <a href="#technology" class="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/5 transition-all">Technology</a>
+                <a href="#applications" class="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/5 transition-all">Applications</a>
+                <a href="#smart-buildings" class="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/5 transition-all">Smart Buildings</a>
+                <a href="#sustainability" class="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/5 transition-all">Sustainability</a>
+                <a href="#gallery" class="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest text-slate-300 hover:text-white hover:bg-white/5 transition-all">Gallery</a>
+                <a href="#contact" class="ml-4 px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest bg-white text-slate-950 hover:bg-cyanAccent hover:shadow-lg hover:shadow-cyanAccent/30 transform active:scale-95 transition-all">Inquire</a>
+            </nav>
+
+            <!-- Language & Accessibility controls -->
+            <div class="hidden xl:flex items-center space-x-4">
+                <!-- Text Resize Controller -->
+                <div class="flex items-center space-x-1 bg-white/5 rounded-full p-1 border border-white/5">
+                    <button onclick="changeFontSize(-5)" class="w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center text-xs font-bold" aria-label="Decrease Font Size">A-</button>
+                    <span id="font-scale-num" class="text-[10px] font-mono px-1">100%</span>
+                    <button onclick="changeFontSize(5)" class="w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center text-xs font-bold" aria-label="Increase Font Size">A+</button>
+                </div>
+
+                <!-- Dark/Light Theme toggler -->
+                <button id="global-theme-toggle" class="w-10 h-10 rounded-full bg-white/5 border border-white/5 flex items-center justify-center hover:bg-white/10" aria-label="Switch Theme Design">
+                    <i id="theme-btn-icon" class="ph ph-sun text-lg text-cyanAccent"></i>
+                </button>
+
+                <!-- Translation Engine -->
+                <select id="lang-switch" onchange="translateSite(this.value)" class="bg-white/5 border border-white/5 rounded-full px-3 py-1.5 text-xs font-bold text-white focus:ring-1 focus:ring-cyanAccent" aria-label="Change Language">
+                    <option value="en" class="bg-slate-950">EN</option>
+                    <option value="fr" class="bg-slate-950" selected>FR</option>
+                    <option value="ar" class="bg-slate-950">AR</option>
+                </select>
+            </div>
+
+            <!-- Hamburger Button for Mobile -->
+            <button id="mobile-menu-trigger" class="lg:hidden w-11 h-11 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white" aria-expanded="false" aria-controls="mobile-nav" aria-label="Toggle Mobile Drawer">
+                <i id="mobile-menu-icon" class="ph ph-list text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Drawer -->
+        <div id="mobile-nav" class="hidden lg:hidden w-full absolute top-full left-0 bg-slate-950/95 backdrop-blur-3xl border-b border-white/5 py-6 px-8 space-y-4 text-left">
+            <a href="#home" class="block py-2.5 text-base font-medium tracking-wider text-slate-300 border-b border-white/5">Home</a>
+            <a href="#technology" class="block py-2.5 text-base font-medium tracking-wider text-slate-300 border-b border-white/5">Technology</a>
+            <a href="#applications" class="block py-2.5 text-base font-medium tracking-wider text-slate-300 border-b border-white/5">Applications</a>
+            <a href="#smart-buildings" class="block py-2.5 text-base font-medium tracking-wider text-slate-300 border-b border-white/5">Smart Buildings</a>
+            <a href="#sustainability" class="block py-2.5 text-base font-medium tracking-wider text-slate-300 border-b border-white/5">Sustainability</a>
+            <a href="#gallery" class="block py-2.5 text-base font-medium tracking-wider text-slate-300 border-b border-white/5">Gallery</a>
+            <a href="#contact" class="block text-center py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-cyanAccent text-slate-950 font-bold uppercase tracking-wider text-sm">Get in Touch</a>
+        </div>
+    </header>
+
+    <!-- 1. Full-Screen Cinematic Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden py-24 px-6">
+        <!-- Live Custom Cinematic Particles Backdrop -->
+        <canvas id="particles-canvas" class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"></canvas>
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/40 to-slate-950 z-10"></div>
+
+        <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-20">
+            <!-- Sleek Left Text Side -->
+            <div class="lg:col-span-7 text-left space-y-8">
+                <div class="inline-flex items-center space-x-3 px-4 py-1.5 rounded-full bg-cyanAccent/10 border border-cyanAccent/30 text-cyanAccent text-xs font-bold uppercase tracking-widest">
+                    <i class="ph ph-sparkle animate-spin" style="animation-duration: 3s"></i>
+                    <span>Quantum Smart Glass Solution</span>
+                </div>
+                
+                <h1 id="hero-main-title" class="text-4xl sm:text-6xl xl:text-7xl font-black tracking-tight leading-[1.05] text-gradient">
+                    Le verre intelligent qui s'adapte à la lumière et à la chaleur.
+                </h1>
+                
+                <p id="hero-sub-para" class="text-lg sm:text-xl text-slate-300 font-light max-w-2xl leading-relaxed">
+                    ElectroGlass Nédroma fusionne la nanotechnologie moléculaire avancée et l'architecture contemporaine durable pour créer des façades autonomes à contrôle thermique optimal.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#smart-buildings" class="px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest bg-gradient-to-r from-brand-500 to-cyanAccent text-slate-950 hover:shadow-lg hover:shadow-cyanAccent/30 hover:scale-[1.02] active:scale-95 transition-all text-center">
+                        Découvrir le projet
+                    </a>
+                    <a href="#technology" class="px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-white/20 transition-all text-center">
+                        La Technologie
+                    </a>
+                </div>
+
+                <!-- Animated Dynamic Metrics Counter -->
+                <div class="grid grid-cols-3 gap-6 pt-10 border-t border-white/5 max-w-lg">
+                    <div>
+                        <span class="block text-3xl sm:text-4xl font-black text-cyanAccent font-mono" id="stat-co2">0</span>
+                        <span class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold">T. CO2 Évitées</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl sm:text-4xl font-black text-cyanAccent font-mono" id="stat-kwh">0</span>
+                        <span class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold">kWh Économisés</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl sm:text-4xl font-black text-cyanAccent font-mono" id="stat-roi">0</span>
+                        <span class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold">Ans Amortissement</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breathtaking Interactive Visual 3D Block -->
+            <div class="lg:col-span-5 relative w-full aspect-square rounded-3xl apple-blur p-8 shadow-2xl flex flex-col justify-between overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-tr from-brand-500/5 to-cyanAccent/5 pointer-events-none"></div>
+                
+                <div class="flex items-center justify-between border-b border-white/10 pb-4 relative z-10">
+                    <span class="text-xs font-mono font-bold uppercase text-cyanAccent tracking-widest flex items-center">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-ping"></span>
+                        Simulateur de Façade Active
+                    </span>
+                    
+                    <div class="flex bg-white/5 rounded-full p-1 border border-white/5" role="group" aria-label="Choisir la teinte">
+                        <button onclick="setPreviewState(0.1)" class="px-3 py-1 text-[10px] font-bold rounded-full hover:text-white transition-all text-slate-400" id="btn-hero-clear">Clair</button>
+                        <button onclick="setPreviewState(0.55)" class="px-3 py-1 text-[10px] font-bold rounded-full hover:text-white transition-all text-slate-400" id="btn-hero-mid">Teinté</button>
+                        <button onclick="setPreviewState(0.95)" class="px-3 py-1 text-[10px] font-bold rounded-full hover:text-white transition-all text-slate-400" id="btn-hero-opaque">Opaque</button>
+                    </div>
+                </div>
+
+                <!-- WebGL 3D Container -->
+                <div class="relative w-full h-[320px] rounded-2xl overflow-hidden bg-slate-950 border border-white/5 flex items-center justify-center my-4">
+                    <canvas id="hero-3d-scene" class="absolute inset-0 w-full h-full object-cover"></canvas>
+                    <div class="absolute bottom-4 left-4 bg-slate-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 text-[9px] uppercase tracking-wider flex items-center space-x-2 pointer-events-none">
+                        <i class="ph ph-arrows-out-cardinal text-cyanAccent"></i>
+                        <span>Faites glisser pour faire pivoter le vitrage</span>
+                    </div>
+                </div>
+
+                <!-- Dynamic Specs Panel -->
+                <div class="grid grid-cols-2 gap-6 border-t border-white/10 pt-4 relative z-10 text-left">
+                    <div>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">Transmission Optique</span>
+                        <span id="hero-trans-display" class="text-2xl font-black text-white font-mono">90% LFT</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">Chaleur Solaire Bloquée</span>
+                        <span id="hero-heat-display" class="text-2xl font-black text-emerald-400 font-mono">15%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Technology Section: Advanced Sourcing & Science -->
+    <section id="technology" class="py-32 px-6 relative border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-24">
+                <h2 class="text-xs font-bold text-cyanAccent uppercase tracking-widest">Molecular Engineering</h2>
+                <h3 class="text-3xl sm:text-5xl font-black tracking-tight text-white">Technologie du Verre Électrochromique</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-500 to-cyanAccent mx-auto rounded-full"></div>
+                <p class="text-slate-400 font-light text-base sm:text-lg">Une innovation de rupture initiée par Amina Ichou et façonnée à Nédroma, Tlemcen, valorisant les gisements locaux de haute pureté.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                <!-- Text Details -->
+                <div class="lg:col-span-6 space-y-8 text-left">
+                    <p class="text-lg text-slate-300 leading-relaxed font-light">
+                        Le verre intelligent d'<strong>ElectroGlass Nédroma</strong> utilise un empilement de couches nanométriques d'oxydes métalliques. Lorsqu'une impulsion électrique minime (&lt; 5V) est appliquée, des ions lithium migrent à travers l'électrolyte polymère, provoquant un changement de teinte réversible.
+                    </p>
+
+                    <div class="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-4">
+                        <h4 class="font-bold text-white flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-cyanAccent animate-pulse"></span>
+                            <span>Caractéristiques de la transition nanométrique</span>
+                        </h4>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-center space-x-2">
+                                <i class="ph ph-check text-cyanAccent"></i>
+                                <span><strong>Caractère Bistable :</strong> Zéro consommation électrique pour maintenir l'état teinté.</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="ph ph-check text-cyanAccent"></i>
+                                <span><strong>Filtration UV :</strong> 99% des ultraviolets sont bloqués de manière constante.</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="ph ph-check text-cyanAccent"></i>
+                                <span><strong>Sourcing Local Algérien :</strong> Formulation de couches minces avec de la silice issue d'Algérie.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <p class="text-sm text-slate-500 font-light">
+                        L'intégration d'oxydes d'indium et d'étain (ITO) fabriqués localement réduit significativement l'empreinte carbone initiale par rapport aux systèmes vitrés hautement transformés importés.
+                    </p>
+                </div>
+
+                <!-- High-tech Explanatory Vector Diagram -->
+                <div class="lg:col-span-6 relative p-8 rounded-3xl apple-blur border border-white/10 flex flex-col items-center">
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-6">Représentation schématique multicouche</h3>
+                    <div class="w-full bg-slate-950 p-6 rounded-2xl border border-white/5">
+                        <svg viewBox="0 0 400 180" class="w-full h-auto">
+                            <!-- Left glass -->
+                            <rect x="20" y="20" width="30" height="140" rx="3" fill="#0084ff" fill-opacity="0.1" stroke="#0084ff" stroke-width="2"/>
+                            <text x="35" y="15" fill="#a5f3fc" font-size="8" font-weight="bold" text-anchor="middle">VERRE</text>
+                            
+                            <!-- Multilayer active stack -->
+                            <rect x="60" y="30" width="20" height="120" rx="2" fill="#00f2fe" fill-opacity="0.3"/>
+                            <text x="70" y="160" fill="#00f2fe" font-size="7" text-anchor="middle">TCO</text>
+                            
+                            <rect x="90" y="30" width="45" height="120" rx="2" fill="#3b82f6" fill-opacity="0.2"/>
+                            <text x="112" y="15" fill="#93c5fd" font-size="7" text-anchor="middle">ÉLECTROCHROME</text>
+                            
+                            <rect x="145" y="30" width="30" height="120" rx="2" fill="#10b981" fill-opacity="0.25"/>
+                            <text x="160" y="160" fill="#34d399" font-size="7" text-anchor="middle">ÉLECTROLYTE</text>
+                            
+                            <rect x="185" y="30" width="45" height="120" rx="2" fill="#8b5cf6" fill-opacity="0.25"/>
+                            <text x="207" y="15" fill="#c084fc" font-size="7" text-anchor="middle">CONTRE-ÉLECTRODE</text>
+                            
+                            <rect x="240" y="30" width="20" height="120" rx="2" fill="#00f2fe" fill-opacity="0.3"/>
+                            <text x="250" y="160" fill="#00f2fe" font-size="7" text-anchor="middle">TCO</text>
+                            
+                            <!-- Right glass -->
+                            <rect x="270" y="20" width="30" height="140" rx="3" fill="#0084ff" fill-opacity="0.1" stroke="#0084ff" stroke-width="2"/>
+                            <text x="285" y="15" fill="#a5f3fc" font-size="8" font-weight="bold" text-anchor="middle">VERRE</text>
+
+                            <!-- Animated Lithium Ions -->
+                            <circle cx="207" cy="60" r="4.5" fill="#fbbf24">
+                                <animate attributeName="cx" values="207;112;207" dur="4s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="207" cy="90" r="4.5" fill="#fbbf24">
+                                <animate attributeName="cx" values="207;112;207" dur="3s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="207" cy="120" r="4.5" fill="#fbbf24">
+                                <animate attributeName="cx" values="207;112;207" dur="5s" repeatCount="indefinite" />
+                            </circle>
+                        </svg>
+                    </div>
+                    <span class="text-[9px] font-mono text-slate-500 mt-4 uppercase tracking-widest">Migration continue d'ions (Li+) sous l'action d'un courant de 3.5V</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Applications: Dynamic Architectural Cards -->
+    <section id="applications" class="py-32 px-6 relative bg-slate-900/40 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-24">
+                <h2 class="text-xs font-bold text-cyanAccent uppercase tracking-widest">Global Deployments</h2>
+                <h3 class="text-3xl sm:text-5xl font-black tracking-tight text-white">Domaines d'Application Architecturale</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-500 to-cyanAccent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- App Card 1 -->
+                <div class="group relative rounded-3xl overflow-hidden apple-blur p-8 shadow-xl transition-all hover:scale-[1.02] hover:shadow-cyanAccent/5 text-left border border-white/5">
+                    <div class="w-14 h-14 rounded-2xl bg-cyanAccent/10 text-cyanAccent flex items-center justify-center mb-6">
+                        <i class="ph ph-buildings text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Sièges Sociaux & Bureaux</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed font-light">
+                        Régulation automatisée de l'éclairage de travail, élimination de l'éblouissement sur les postes de travail et amélioration drastique de la productivité.
+                    </p>
+                </div>
+
+                <!-- App Card 2 -->
+                <div class="group relative rounded-3xl overflow-hidden apple-blur p-8 shadow-xl transition-all hover:scale-[1.02] hover:shadow-cyanAccent/5 text-left border border-white/5">
+                    <div class="w-14 h-14 rounded-2xl bg-cyanAccent/10 text-cyanAccent flex items-center justify-center mb-6">
+                        <i class="ph ph-first-aid text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Centres d'Hospitalisation</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed font-light">
+                        Contrôle de l'intimité des patients sans rideaux textiles (sources d'agents pathogènes) et apport optimisé en lumière du jour thérapeutique.
+                    </p>
+                </div>
+
+                <!-- App Card 3 -->
+                <div class="group relative rounded-3xl overflow-hidden apple-blur p-8 shadow-xl transition-all hover:scale-[1.02] hover:shadow-cyanAccent/5 text-left border border-white/5">
+                    <div class="w-14 h-14 rounded-2xl bg-cyanAccent/10 text-cyanAccent flex items-center justify-center mb-6">
+                        <i class="ph ph-brand-hotel text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Hôtels & Resorts de Luxe</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed font-light">
+                        Confort exceptionnel des clients avec occultation tactile intelligente et élimination des stores mécaniques sujets à l'usure.
+                    </p>
+                </div>
+
+                <!-- App Card 4 -->
+                <div class="group relative rounded-3xl overflow-hidden apple-blur p-8 shadow-xl transition-all hover:scale-[1.02] hover:shadow-cyanAccent/5 text-left border border-white/5">
+                    <div class="w-14 h-14 rounded-2xl bg-cyanAccent/10 text-cyanAccent flex items-center justify-center mb-6">
+                        <i class="ph ph-storefront text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Centres Commerciaux</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed font-light">
+                        Contrôle de la surchauffe sous les verrières de grande dimension et protection intégrale des articles en vitrine contre la décoloration par rayonnement UV.
+                    </p>
+                </div>
+
+                <!-- App Card 5 -->
+                <div class="group relative rounded-3xl overflow-hidden apple-blur p-8 shadow-xl transition-all hover:scale-[1.02] hover:shadow-cyanAccent/5 text-left border border-white/5">
+                    <div class="w-14 h-14 rounded-2xl bg-cyanAccent/10 text-cyanAccent flex items-center justify-center mb-6">
+                        <i class="ph ph-house-line text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Villas Contemporaines</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed font-light">
+                        Intégration d'architectures résidentielles bioclimatiques avec façades coulissantes à haut facteur de transmission variable.
+                    </p>
+                </div>
+
+                <!-- App Card 6 -->
+                <div class="group relative rounded-3xl overflow-hidden apple-blur p-8 shadow-xl transition-all hover:scale-[1.02] hover:shadow-cyanAccent/5 text-left border border-white/5">
+                    <div class="w-14 h-14 rounded-2xl bg-cyanAccent/10 text-cyanAccent flex items-center justify-center mb-6">
+                        <i class="ph ph-airplane-landing text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Aéroports & Terminaux</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed font-light">
+                        Régulation thermique des immenses dômes transparents, assurant une température constante pour des millions de voyageurs annuels.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Smart Buildings & Split Slider Interactive Simulation Section -->
+    <section id="smart-buildings" class="py-32 px-6 relative border-t border-white/5 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-24">
+                <h2 class="text-xs font-bold text-cyanAccent uppercase tracking-widest">Active Facade Simulator</h2>
+                <h3 class="text-3xl sm:text-5xl font-black tracking-tight text-white">Visualisation Bâtiments Intelligents</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-500 to-cyanAccent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                <!-- Interactive split visualizer (Before / After) -->
+                <div class="lg:col-span-7 space-y-6">
+                    <h4 class="text-xl font-bold text-white text-left flex items-center">
+                        <i class="ph ph-columns text-cyanAccent mr-2"></i>
+                        Glissière Interactive Avant / Après Activation
+                    </h4>
+                    
+                    <div class="split-slider-container w-full aspect-video rounded-3xl border border-white/10 shadow-2xl relative" id="split-slider">
+                        <!-- Before (Clear State) -->
+                        <div class="absolute inset-0 w-full h-full z-10">
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200" alt="Bâtiment clair" class="w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 bg-slate-950/80 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest text-white border border-white/10">
+                                DOUBLE VITRAGE CLASSIQUE
+                            </div>
+                        </div>
+
+                        <!-- After (Opaque Tint State) -->
+                        <div class="absolute inset-0 w-full h-full z-20 overflow-hidden" id="after-image-layer" style="width: 50%;">
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200" alt="Bâtiment teinté" class="absolute top-0 left-0 w-full h-full object-cover max-w-none" id="after-img-resizer">
+                            <div class="absolute inset-0 bg-[#071930]/80 mix-blend-multiply"></div>
+                            <div class="absolute top-4 right-4 bg-cyanAccent/80 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest text-slate-950">
+                                ELECTROGLASS ACTIVE (4% TINT)
+                            </div>
+                        </div>
+
+                        <!-- Handle -->
+                        <div class="split-slider-handle" id="slider-handle" style="left: 50%;">
+                            <div class="split-slider-button">
+                                <i class="ph ph-arrows-left-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Realtime Dashboard controls -->
+                <div class="lg:col-span-5 p-8 rounded-3xl apple-blur border border-white/5 shadow-2xl text-left space-y-6">
+                    <h3 class="text-xl font-bold text-white flex items-center space-x-2 border-b border-white/5 pb-4">
+                        <i class="ph ph-app-window text-cyanAccent"></i>
+                        <span>Dashboard Domotique</span>
+                    </h3>
+
+                    <!-- Sliders -->
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs font-bold uppercase tracking-wider text-slate-400">
+                                <span>Heure de la Journée</span>
+                                <span id="dash-time-val" class="text-cyanAccent">12:00</span>
+                            </div>
+                            <input type="range" id="dash-time" min="6" max="19" step="1" value="12" oninput="updateDashboardSim()" class="w-full accent-cyanAccent">
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs font-bold uppercase tracking-wider text-slate-400">
+                                <span>Ensoleillement Direct</span>
+                                <span id="dash-sun-val" class="text-cyanAccent">850 W/m²</span>
+                            </div>
+                            <input type="range" id="dash-sun" min="100" max="1100" step="50" value="850" oninput="updateDashboardSim()" class="w-full accent-cyanAccent">
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs font-bold uppercase tracking-wider text-slate-400">
+                                <span>Taux d'Occultation du verre</span>
+                                <span id="dash-tint-val" class="text-cyanAccent">65%</span>
+                            </div>
+                            <input type="range" id="dash-tint" min="10" max="95" step="5" value="65" oninput="updateDashboardSim()" class="w-full accent-cyanAccent">
+                        </div>
+                    </div>
+
+                    <!-- Realtime Output Stats -->
+                    <div class="p-4 rounded-2xl bg-slate-950/80 border border-white/5 space-y-3 font-mono text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Température de Verre</span>
+                            <span id="dash-res-temp" class="text-white font-bold">23.2 °C</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Chaleur Intérieure Transmise</span>
+                            <span id="dash-res-heat" class="text-cyanAccent font-bold">125 W/m²</span>
+                        </div>
+                        <div class="flex justify-between border-t border-white/5 pt-2 font-bold">
+                            <span class="text-emerald-400">Économie Énergie Instantanée</span>
+                            <span id="dash-res-savings" class="text-emerald-400">-38%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Sustainability: Local Materials & High-Tech Eco Sourcing -->
+    <section id="sustainability" class="py-32 px-6 relative bg-slate-900/40 border-t border-b border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-24">
+                <h2 class="text-xs font-bold text-cyanAccent uppercase tracking-widest">Eco Responsibility & Local Value</h2>
+                <h3 class="text-3xl sm:text-5xl font-black tracking-tight text-white">Développement Durable & Économies Réelles</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-500 to-cyanAccent mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Dashboard Analytics Interface -->
+            <div class="p-8 sm:p-12 rounded-3xl apple-blur border border-white/10 shadow-2xl text-left grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Sourcing Content -->
+                <div class="lg:col-span-7 space-y-6">
+                    <h3 class="text-2xl sm:text-3xl font-black text-white leading-tight">Valorisation des ressources de haute pureté d'Algérie</h3>
+                    <p class="text-slate-400 font-light leading-relaxed text-sm sm:text-base">
+                        Plutôt que d'importer des composants vitrés coûteux, l'intégration locale est de plus de 75%. Le sable siliceux de Tlemcen subit des traitements physiques avancés de purification mécanique pour devenir l'oxyde de silicium support de nos films de pulvérisation.
+                    </p>
+
+                    <!-- Core highlights cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                            <span class="text-xs font-bold text-cyanAccent uppercase block mb-1">Impact Climatisation</span>
+                            <span class="text-sm text-slate-300">Baisse globale de la demande de pointe électrique en été saharien.</span>
+                        </div>
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                            <span class="text-xs font-bold text-cyanAccent uppercase block mb-1">Protection Intérieure</span>
+                            <span class="text-sm text-slate-300">Supprime le vieillissement prématuré du mobilier par UV.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animated Interactive ROI Calculator Panel -->
+                <div class="lg:col-span-5 p-6 rounded-2xl bg-slate-950/90 border border-white/5 space-y-4">
+                    <h4 class="text-base font-bold text-white flex items-center space-x-2">
+                        <i class="ph ph-chart-bar text-cyanAccent"></i>
+                        <span>Analyseur Financier Cumulé</span>
+                    </h4>
+
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <label for="calc-area-input" class="text-xs uppercase font-bold tracking-widest text-slate-400 block">Surface Totale Vitrée (m²)</label>
+                            <input type="number" id="calc-area-input" value="350" min="10" max="50000" oninput="runFinancialCalc()" class="w-full p-3 rounded-xl bg-white/5 text-white border border-white/10 focus:ring-1 focus:ring-cyanAccent font-mono">
+                        </div>
+
+                        <!-- Graph Output representations -->
+                        <div class="space-y-2 font-mono text-xs">
+                            <div class="flex justify-between text-slate-400">
+                                <span>Investissement Moyen Initial</span>
+                                <span id="calc-res-init" class="text-white font-bold">17,500,000 DZD</span>
+                            </div>
+                            <div class="flex justify-between text-slate-400">
+                                <span>Retour sur investissement net</span>
+                                <span id="calc-res-years" class="text-emerald-400 font-bold">6.5 Ans</span>
+                            </div>
+                            <div class="flex justify-between text-slate-400">
+                                <span>Économie d'Énergie (30 Ans)</span>
+                                <span id="calc-res-30y" class="text-cyanAccent font-extrabold text-sm">62,400,000 DZD</span>
+                            </div>
+                        </div>
+
+                        <button onclick="downloadTechnicalSheet()" class="w-full py-3.5 rounded-full font-bold uppercase text-xs tracking-widest bg-white text-slate-950 hover:bg-cyanAccent hover:shadow-lg hover:shadow-cyanAccent/30 transition-all">
+                            Télécharger la documentation technique
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Cinematic Gallery Section -->
+    <section id="gallery" class="py-32 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-24">
+                <h2 class="text-xs font-bold text-cyanAccent uppercase tracking-widest">Architectural Concepts</h2>
+                <h3 class="text-3xl sm:text-5xl font-black tracking-tight text-white">Galerie d'Intégration d'Exception</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-500 to-cyanAccent mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Interactive Gallery Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="group relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/5 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" alt="Façades technologiques de bureaux" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 text-white text-left">
+                        <span class="text-[9px] font-mono tracking-widest bg-cyanAccent text-slate-950 px-2 py-0.5 rounded-md uppercase font-bold max-w-max">Smart City</span>
+                        <div>
+                            <h4 class="text-lg font-bold">Façade Active de Bureaux</h4>
+                            <p class="text-xs text-slate-300 mt-1">Nédroma Advanced Architectural Solutions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="group relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/5 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800" alt="Espace de conférence avec cloisons intelligentes" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 text-white text-left">
+                        <span class="text-[9px] font-mono tracking-widest bg-cyanAccent text-slate-950 px-2 py-0.5 rounded-md uppercase font-bold max-w-max">Corporate Office</span>
+                        <div>
+                            <h4 class="text-lg font-bold">Cloisons de Confidentialité Dynamiques</h4>
+                            <p class="text-xs text-slate-300 mt-1">Intimité à la demande contrôlée par GTB.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="group relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-white/5 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800" alt="Villa moderne à façade intelligente" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 text-white text-left">
+                        <span class="text-[9px] font-mono tracking-widest bg-cyanAccent text-slate-950 px-2 py-0.5 rounded-md uppercase font-bold max-w-max">Luxury Residential</span>
+                        <div>
+                            <h4 class="text-lg font-bold">Villas Bioclimatiques de Prestige</h4>
+                            <p class="text-xs text-slate-300 mt-1">Confort thermique total et réduction du rayonnement solaire direct.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Premium High-Tech Contact Section -->
+    <section id="contact" class="py-32 px-6 relative bg-slate-900/40 border-t border-b border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto space-y-4 mb-24">
+                <h2 class="text-xs font-bold text-cyanAccent uppercase tracking-widest">Inquire & Partner</h2>
+                <h3 class="text-3xl sm:text-5xl font-black tracking-tight text-white">Formulaire de Contact Spécialisé</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-500 to-cyanAccent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start text-left">
+                <!-- Informative panel on the right -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div class="p-8 rounded-3xl apple-blur border border-white/5 space-y-6">
+                        <h4 class="text-xl font-bold text-white border-b border-white/5 pb-4">Coordonnées de l'Administration</h4>
+                        
+                        <div class="space-y-4 font-light text-slate-300 text-sm">
+                            <div class="flex items-start space-x-3">
+                                <i class="ph ph-user-crown text-xl text-cyanAccent"></i>
+                                <div>
+                                    <span class="block text-slate-500 text-xs font-bold uppercase tracking-wider">Responsable Scientifique</span>
+                                    <span>Amina Ichou</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="ph ph-map-pin text-xl text-cyanAccent"></i>
+                                <div>
+                                    <span class="block text-slate-500 text-xs font-bold uppercase tracking-wider">Unité de R&D</span>
+                                    <span>Nédroma, Tlemcen, Algérie</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="ph ph-envelope-simple text-xl text-cyanAccent"></i>
+                                <div>
+                                    <span class="block text-slate-500 text-xs font-bold uppercase tracking-wider">Email d'Affaires</span>
+                                    <span>contact@electroglass-nedroma.dz</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Simple, beautifully clean vector geographic representation of Nédroma -->
+                        <div class="w-full h-44 bg-slate-950 rounded-2xl border border-white/5 relative overflow-hidden flex items-center justify-center">
+                            <canvas id="nedroma-mini-map" class="absolute inset-0 w-full h-full"></canvas>
+                            <div class="absolute bottom-3 left-3 bg-slate-900/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 text-[9px] uppercase tracking-wider">
+                                Coordonnées GPS: Tlemcen, Algérie
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form itself -->
+                <form id="pro-contact-form" onsubmit="submitEnterpriseInquiry(event)" class="lg:col-span-7 p-8 rounded-3xl bg-slate-950 border border-white/5 shadow-2xl space-y-6">
+                    <div class="space-y-2">
+                        <label for="inq-name" class="text-xs uppercase font-bold tracking-widest text-slate-400">Nom Complet / Cabinet d'Architecture</label>
+                        <input type="text" id="inq-name" required class="w-full p-4 rounded-xl bg-white/5 text-white border border-white/10 focus:ring-1 focus:ring-cyanAccent">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label for="inq-email" class="text-xs uppercase font-bold tracking-widest text-slate-400">Adresse e-mail corporative</label>
+                            <input type="email" id="inq-email" required class="w-full p-4 rounded-xl bg-white/5 text-white border border-white/10 focus:ring-1 focus:ring-cyanAccent">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="inq-phone" class="text-xs uppercase font-bold tracking-widest text-slate-400">Téléphone de contact</label>
+                            <input type="tel" id="inq-phone" class="w-full p-4 rounded-xl bg-white/5 text-white border border-white/10 focus:ring-1 focus:ring-cyanAccent">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="inq-msg" class="text-xs uppercase font-bold tracking-widest text-slate-400">Détails de l'intégration projet / Demande</label>
+                        <textarea id="inq-msg" rows="4" required class="w-full p-4 rounded-xl bg-white/5 text-white border border-white/10 focus:ring-1 focus:ring-cyanAccent"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 rounded-full font-bold uppercase text-xs tracking-widest bg-gradient-to-r from-brand-500 to-cyanAccent text-slate-950 hover:shadow-lg hover:shadow-cyanAccent/30 transform active:scale-95 transition-all">
+                        Transmettre l'Inquiry
+                    </button>
+
+                    <div id="contact-feedback" class="hidden p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+                        <i class="ph ph-check-circle mr-2 text-sm"></i>
+                        Votre demande d'information technique a été transmise à Amina Ichou. Nous vous répondrons sous 48 heures.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sleek Tech Footer -->
+    <footer class="bg-slate-950 text-slate-500 py-16 border-t border-white/5 text-xs">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-cyanAccent flex items-center justify-center text-slate-950 font-black">
+                        <i class="ph ph-shield-checkered text-lg"></i>
+                    </div>
+                    <span class="text-base font-black text-white">ElectroGlass Nédroma</span>
+                </div>
+                <p class="text-[11px] leading-relaxed text-slate-500">Unité de R&D verrière et d'assemblage nanotechnologique implantée à Nédroma, Tlemcen, Algérie. Conçu pour s'adapter aux enveloppes actives de Smart Cities.</p>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="text-white font-bold tracking-widest uppercase">Spécifications & Documents</h4>
+                <div class="flex flex-col space-y-2">
+                    <button onclick="downloadTechnicalSheet()" class="text-left hover:text-white transition-colors flex items-center space-x-1 p-0 bg-transparent border-none text-slate-500">
+                        <i class="ph ph-file-pdf"></i>
+                        <span>Documentation Technique (PDF)</span>
+                    </button>
+                    <a href="#technology" class="hover:text-white transition-colors">Normes d'intégration GTB / Domotique</a>
+                    <a href="#smart-buildings" class="hover:text-white transition-colors">Simulation de charges thermiques</a>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <p>&copy; 2026 ElectroGlass Nédroma. Tous droits réservés.</p>
+                <p class="text-[10px] text-slate-600">Norme d'accessibilité WCAG 2.2 contrastes et gestion clavier entièrement intégrée. Porteur du projet : Amina Ichou.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Smart Assistant Chatbot bubble -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="chat-bubble-toggle" class="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-500 to-cyanAccent text-slate-950 shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center neon-glow" aria-haspopup="dialog" aria-expanded="false" aria-controls="chat-window" aria-label="Ouvrir le Chatbot d'Assistance">
+            <i class="ph ph-chats text-2xl" id="chat-toggle-icon"></i>
+        </button>
+
+        <!-- Chat window box -->
+        <div id="chat-window" class="hidden absolute bottom-18 right-0 w-80 sm:w-96 rounded-2xl shadow-2xl border border-white/10 apple-blur overflow-hidden flex flex-col h-[400px]">
+            <div class="bg-slate-900 p-4 border-b border-white/5 flex items-center justify-between text-left">
+                <div class="flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-bold text-xs text-white">Quantum Assistant</span>
+                </div>
+                <button onclick="toggleChatWindow()" class="text-slate-400 hover:text-white"><i class="ph ph-x text-lg"></i></button>
+            </div>
+
+            <div id="chat-log" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs font-light text-left">
+                <div class="p-3 rounded-xl bg-white/5 border border-white/5 max-w-[85%] text-slate-300">
+                    Bonjour ! Je suis l'assistant technique d'ElectroGlass Nédroma. Je suis à votre entière disposition pour vous renseigner sur notre technologie moléculaire active ou nos installations basées à Nédroma.
+                </div>
+            </div>
+
+            <form onsubmit="handleAssistantSubmit(event)" class="p-3 border-t border-white/5 bg-slate-950/90 flex space-x-2">
+                <input type="text" id="chat-input" placeholder="Écrivez votre question technique..." required class="flex-1 p-3 rounded-lg bg-white/5 text-white text-xs border border-white/10 focus:ring-1 focus:ring-cyanAccent">
+                <button type="submit" class="p-3 rounded-lg bg-cyanAccent text-slate-950 hover:bg-brand-500 hover:text-white transition-colors" aria-label="Envoyer le message">
+                    <i class="ph ph-paper-plane-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripting & Automation Engine -->
+    <script>
+        let currentLanguage = 'fr';
+        let customFontScale = 100;
+        let activeGlassOpacity = 0.55;
+
+        // Three.js variables
+        let scene3D, camera3D, renderer3D, orbitControls, glassMesh3D;
+
+        // Chatbot Elements
+        const chatWindow = document.getElementById('chat-window');
+        const chatBubbleToggle = document.getElementById('chat-bubble-toggle');
+        const chatToggleIcon = document.getElementById('chat-toggle-icon');
+        const chatLog = document.getElementById('chat-log');
+
+        function toggleChatWindow() {
+            const isHidden = chatWindow.classList.contains('hidden');
+            if (isHidden) {
+                chatWindow.classList.remove('hidden');
+                chatBubbleToggle.setAttribute('aria-expanded', 'true');
+                chatToggleIcon.className = "ph ph-x text-2xl";
+            } else {
+                chatWindow.classList.add('hidden');
+                chatBubbleToggle.setAttribute('aria-expanded', 'false');
+                chatToggleIcon.className = "ph ph-chats text-2xl";
+            }
+        }
+        chatBubbleToggle.addEventListener('click', toggleChatWindow);
+
+        function handleAssistantSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const query = input.value.trim();
+            if (!query) return;
+
+            appendChatMsg(query, true);
+            input.value = '';
+
+            // Simulated think latency
+            const loaderId = appendChatMsg("Calcul des données...", false);
+
+            setTimeout(() => {
+                document.getElementById(loaderId).remove();
+                let answer = "Les équipes scientifiques d'Amina Ichou à Nédroma analysent actuellement cette configuration spécifique d'intégration thermique. Contactez-nous pour une étude de projet complète.";
+                const qLower = query.toLowerCase();
+
+                if (qLower.includes('amina') || qLower.includes('ichou') || qLower.includes('responsable') || qLower.includes('porteur')) {
+                    answer = "Amina Ichou est la porteuse scientifique principale d'ElectroGlass Nédroma, dirigeant la recherche sur les films minces électrochromiques et le sourcing matière.";
+                } else if (qLower.includes('nedroma') || qLower.includes('nédroma') || qLower.includes('tlemcen') || qLower.includes('algérie')) {
+                    answer = "Toutes nos infrastructures d'ingénierie et d'assemblage nanotechnologique sont situées exclusivement à Nédroma, Wilaya de Tlemcen, Algérie.";
+                } else if (qLower.includes('fonction') || qLower.includes('comment') || qLower.includes('techno') || qLower.includes('science')) {
+                    answer = "Le verre intègre des couches minces d'oxydes d'indium et d'étain (ITO). Une impulsion électrique induit une migration ionique réversible modifiant la transparence (LFT).";
+                } else if (qLower.includes('durabilité') || qLower.includes('vie') || qLower.includes('an') || qLower.includes('amortissement')) {
+                    answer = "Conçu pour supporter 100 000 transitions, la durée de vie est supérieure à 35 ans. L'amortissement complet est atteint dès la 6ème année d'exploitation CVC.";
+                }
+
+                appendChatMsg(answer, false);
+            }, 800);
+        }
+
+        function appendChatMsg(text, isUser) {
+            const id = "msg-" + Date.now();
+            const div = document.createElement('div');
+            div.id = id;
+            div.className = `p-3 rounded-xl max-w-[85%] font-light leading-relaxed text-xs ${isUser ? 'bg-gradient-to-tr from-brand-500 to-cyanAccent text-slate-950 ml-auto font-semibold' : 'bg-white/5 border border-white/5 text-slate-300'}`;
+            div.innerText = text;
+            chatLog.appendChild(div);
+            chatLog.scrollTop = chatLog.scrollHeight;
+            return id;
+        }
+
+        // Before / After split-slider gesture control (Touch & Mouse compliant)
+        const splitSlider = document.getElementById('split-slider');
+        const afterImageLayer = document.getElementById('after-image-layer');
+        const sliderHandle = document.getElementById('slider-handle');
+        const afterImgResizer = document.getElementById('after-img-resizer');
+
+        function resizeAfterImage(xPos) {
+            const rect = splitSlider.getBoundingClientRect();
+            let relativeX = xPos - rect.left;
+            if (relativeX < 0) relativeX = 0;
+            if (relativeX > rect.width) relativeX = rect.width;
+
+            const percent = (relativeX / rect.width) * 100;
+            afterImageLayer.style.width = `${percent}%`;
+            sliderHandle.style.left = `${percent}%`;
+            afterImgResizer.style.width = `${rect.width}px`;
+        }
+
+        splitSlider.addEventListener('mousemove', (e) => {
+            resizeAfterImage(e.clientX);
+        });
+
+        splitSlider.addEventListener('touchmove', (e) => {
+            if (e.touches && e.touches[0]) {
+                resizeAfterImage(e.touches[0].clientX);
+            }
+        });
+
+        // Resize handler adjustments for the split picture width matching bounds
+        window.addEventListener('resize', () => {
+            const rect = splitSlider.getBoundingClientRect();
+            afterImgResizer.style.width = `${rect.width}px`;
+        });
+
+        // Font scaling for WCAG 2.2 accessibility compliance
+        function changeFontSize(val) {
+            customFontScale += val;
+            if (customFontScale < 80) customFontScale = 80;
+            if (customFontScale > 145) customFontScale = 145;
+            document.documentElement.style.fontSize = `${customFontScale}%`;
+            document.getElementById('font-scale-num').innerText = `${customFontScale}%`;
+        }
+
+        // Translation logic dictionaries (FR / EN / AR)
+        const i18nDict = {
+            en: {
+                hero_title: "Smart Glass adaptable to both natural light and heat.",
+                hero_sub: "ElectroGlass Nédroma combines advanced thin-film molecular engineering with green architecture to forge self-regulating thermal facades.",
+                stat_co2: "185",
+                stat_kwh: "24k",
+                stat_roi: "6.5",
+                tech_h2: "Molecular Engineering",
+                tech_h3: "Electrochromic Glass Technology"
+            },
+            fr: {
+                hero_title: "Le verre intelligent qui s'adapte à la lumière et à la chaleur.",
+                hero_sub: "ElectroGlass Nédroma fusionne la nanotechnologie moléculaire avancée et l'architecture contemporaine durable pour créer des façades autonomes à contrôle thermique optimal.",
+                stat_co2: "245",
+                stat_kwh: "32k",
+                stat_roi: "5.8",
+                tech_h2: "Molecular Engineering",
+                tech_h3: "Technologie du Verre Électrochromique"
+            },
+            ar: {
+                hero_title: "الزجاج الذكي الذي يتكيف تلقائياً مع الضوء والحرارة لراحة معمارية.",
+                hero_sub: "يجمع مشروع إلكتروغلاس ندرومة بين تقنيات النانو المتقدمة والهندسة المعمارية المستدامة لتقديم واجهات نشطة تقلل فواتير التبريد.",
+                stat_co2: "320",
+                stat_kwh: "45k",
+                stat_roi: "4.2",
+                tech_h2: "Molecular Engineering",
+                tech_h3: "تكنولوجيا الزجاج الإلكتروكرومي"
+            }
+        };
+
+        function translateSite(lang) {
+            currentLanguage = lang;
+            const textDir = (lang === 'ar') ? 'rtl' : 'ltr';
+            document.documentElement.dir = textDir;
+            document.documentElement.lang = lang;
+
+            if (lang === 'ar') {
+                document.body.classList.add('font-arabic');
+            } else {
+                document.body.classList.remove('font-arabic');
+            }
+
+            const trans = i18nDict[lang];
+            if (trans) {
+                if (document.getElementById('hero-main-title')) document.getElementById('hero-main-title').innerText = trans.hero_title;
+                if (document.getElementById('hero-sub-para')) document.getElementById('hero-sub-para').innerText = trans.hero_sub;
+            }
+        }
+
+        // Live Background Canvas Particle Simulation
+        const pCanvas = document.getElementById('particles-canvas');
+        if (pCanvas) {
+            const pCtx = pCanvas.getContext('2d');
+            let particlesList = [];
+
+            function resizePCanvas() {
+                pCanvas.width = window.innerWidth;
+                pCanvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizePCanvas);
+            resizePCanvas();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * pCanvas.width;
+                    this.y = Math.random() * pCanvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = Math.random() * 0.4 - 0.2;
+                    this.speedY = Math.random() * 0.4 - 0.2;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x < 0 || this.x > pCanvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > pCanvas.height) this.speedY *= -1;
+                }
+                draw() {
+                    pCtx.beginPath();
+                    pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    pCtx.fillStyle = 'rgba(0, 242, 254, 0.15)';
+                    pCtx.fill();
+                }
+            }
+
+            for (let i = 0; i < 75; i++) {
+                particlesList.push(new Particle());
+            }
+
+            function animateParticles() {
+                pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+                particlesList.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+        }
+
+        // Live Smart Facade Domotique Dashboard calculation loops
+        function updateDashboardSim() {
+            const time = parseInt(document.getElementById('dash-time').value) || 12;
+            const sunInput = parseInt(document.getElementById('dash-sun').value) || 850;
+            const tintPercent = parseInt(document.getElementById('dash-tint').value) || 65;
+
+            document.getElementById('dash-time-val').innerText = `${time}:00`;
+            document.getElementById('dash-sun-val').innerText = `${sunInput} W/m²`;
+            document.getElementById('dash-tint-val').innerText = `${tintPercent}%`;
+
+            let coreTemp = (20 + (sunInput / 180) * (1 - (tintPercent / 100))).toFixed(1);
+            let transmittedHeat = Math.round(sunInput * (1 - (tintPercent / 100) * 0.88));
+            let savedRatio = Math.round((tintPercent / 100) * 42);
+
+            document.getElementById('dash-res-temp').innerText = `${coreTemp} °C`;
+            document.getElementById('dash-res-heat').innerText = `${transmittedHeat} W/m²`;
+            document.getElementById('dash-res-savings').innerText = `-${savedRatio}%`;
+
+            setPreviewState(tintPercent / 100);
+        }
+
+        // GSAP Stats counter visual effects
+        function initCounters() {
+            const targets = [
+                { id: 'stat-co2', end: 185 },
+                { id: 'stat-kwh', end: 34000 },
+                { id: 'stat-roi', end: 6 }
+            ];
+
+            targets.forEach(t => {
+                const el = document.getElementById(t.id);
+                if (!el) return;
+                gsap.to(el, {
+                    innerText: t.end,
+                    duration: 3,
+                    ease: "power2.out",
+                    snap: { innerText: 1 },
+                    scrollTrigger: {
+                        trigger: "#home",
+                        start: "top center",
+                    },
+                    onUpdate: function() {
+                        if (t.id === 'stat-kwh') {
+                            el.innerText = Math.round(parseFloat(el.innerText)).toLocaleString() + " kWh";
+                        } else if (t.id === 'stat-co2') {
+                            el.innerText = Math.round(parseFloat(el.innerText)) + " Tons";
+                        } else {
+                            el.innerText = Math.round(parseFloat(el.innerText)) + " ans";
+                        }
+                    }
+                });
+            });
+        }
+
+        // Financial analyzer calculators
+        function runFinancialCalc() {
+            const area = parseFloat(document.getElementById('calc-area-input').value) || 350;
+            const baseInvestment = area * 14500;
+            const amortizedYears = 6.2;
+            const savingsValue30y = Math.round(area * 180 * 30 * 12);
+
+            document.getElementById('calc-res-init').innerText = `${baseInvestment.toLocaleString()} DZD`;
+            document.getElementById('calc-res-years').innerText = `${amortizedYears} Ans`;
+            document.getElementById('calc-res-30y').innerText = `${savingsValue30y.toLocaleString()} DZD`;
+        }
+
+        // Generate printable Technical specifications sheets on the fly
+        function downloadTechnicalSheet() {
+            const docFrame = window.open('', '_blank');
+            docFrame.document.write(`
+                <html>
+                <head>
+                    <title>ElectroGlass Nédroma - Technical Specs</title>
+                    <style>
+                        body { font-family: 'Inter', sans-serif; padding: 40px; color: #1e293b; background: #fafafa; }
+                        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+                        h1 { color: #020617; border-bottom: 2px solid #00f2fe; padding-bottom: 15px; margin-top: 0; }
+                        .metric-box { background: #f0f9ff; border: 1px solid #e0f2fe; padding: 20px; border-radius: 8px; margin: 20px 0; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>ElectroGlass Nédroma • Quantum Glazing Specifications</h1>
+                        <p><strong>Porteur de Projet:</strong> Amina Ichou</p>
+                        <p><strong>Localisation:</strong> Nédroma, Tlemcen, Algérie</p>
+                        <div class="metric-box">
+                            <strong>Plage de Transmission Lumineuse :</strong> 4% (Opaque) à 90% (Clair)<br>
+                            <strong>Tension de commande électrique :</strong> &lt; 5V CC (Bistable)<br>
+                            <strong>Sourcing silice d'Algérie :</strong> 75% d'intégration locale
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `);
+            docFrame.document.close();
+        }
+
+        // Visual feedback upon sending messages
+        function submitEnterpriseInquiry(e) {
+            e.preventDefault();
+            const feedback = document.getElementById('contact-feedback');
+            feedback.classList.remove('hidden');
+            setTimeout(() => {
+                feedback.classList.add('hidden');
+                document.getElementById('pro-contact-form').reset();
+            }, 5000);
+        }
+
+        // Three.js Interactive Premium Facade Preview initialization
+        function init3DFacade() {
+            const canvas = document.getElementById('hero-3d-scene');
+            if (!canvas) return;
+
+            scene3D = new THREE.Scene();
+            scene3D.background = new THREE.Color(0x020617);
+
+            camera3D = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+            camera3D.position.set(4, 3.5, 6);
+
+            renderer3D = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            renderer3D.setSize(canvas.clientWidth, canvas.clientHeight);
+            renderer3D.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            orbitControls = new THREE.OrbitControls(camera3D, renderer3D.domElement);
+            orbitControls.enableDamping = true;
+            orbitControls.dampingFactor = 0.05;
+            orbitControls.maxPolarAngle = Math.PI / 2;
+
+            const ambient = new THREE.AmbientLight(0xffffff, 0.45);
+            scene3D.add(ambient);
+
+            const directLight = new THREE.DirectionalLight(0x00f2fe, 0.85);
+            directLight.position.set(5, 8, 5);
+            scene3D.add(directLight);
+
+            // Sleek Aluminum architectural window frame mesh
+            const structureGroup = new THREE.Group();
+
+            const outlineGeo = new THREE.BoxGeometry(2.4, 3.2, 0.15);
+            const outlineMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.15 });
+            const outlineMesh = new THREE.Mesh(outlineGeo, outlineMat);
+            structureGroup.add(outlineMesh);
+
+            // Transparent Electrochromic variable tint pane mesh
+            const glassGeo = new THREE.BoxGeometry(2.1, 2.9, 0.08);
+            const glassMat = new THREE.MeshPhysicalMaterial({
+                color: 0x00f2fe,
+                transparent: true,
+                opacity: 0.45,
+                roughness: 0.05,
+                transmission: 0.7,
+                ior: 1.5,
+                thickness: 0.3
+            });
+            glassMesh3D = new THREE.Mesh(glassGeo, glassMat);
+            glassMesh3D.position.z = 0.04;
+            structureGroup.add(glassMesh3D);
+
+            scene3D.add(structureGroup);
+
+            function updateLoop() {
+                requestAnimationFrame(updateLoop);
+                if (orbitControls) orbitControls.update();
+                if (renderer3D && scene3D && camera3D) renderer3D.render(scene3D, camera3D);
+            }
+            updateLoop();
+        }
+
+        // Live transition changes trigger for Three.js opacity & HTML tags
+        function setPreviewState(opacityVal) {
+            activeGlassOpacity = opacityVal;
+
+            if (glassMesh3D && glassMesh3D.material) {
+                // Modulate RGB tint dynamically from premium sky blue to intense charcoal obsidian
+                glassMesh3D.material.color.setRGB(
+                    0.05 + (0.9 * (1 - opacityVal)), 
+                    0.25 + (0.7 * (1 - opacityVal)), 
+                    0.99 * (1 - opacityVal)
+                );
+                glassMesh3D.material.opacity = 0.95 - (opacityVal * 0.85);
+            }
+
+            // Sync visual stats panels
+            document.getElementById('hero-trans-display').innerText = `${Math.round((1 - opacityVal) * 100)}% LFT`;
+            document.getElementById('hero-heat-display').innerText = `${Math.round(opacityVal * 85)}%`;
+
+            // Style active state buttons
+            const btns = ['btn-hero-clear', 'btn-hero-mid', 'btn-hero-opaque'];
+            btns.forEach(id => {
+                const button = document.getElementById(id);
+                if (button) button.className = "px-3 py-1 text-[10px] font-bold rounded-full hover:text-white transition-all text-slate-400";
+            });
+
+            if (opacityVal < 0.3) {
+                document.getElementById('btn-hero-clear').className = "px-3 py-1 text-[10px] font-black rounded-full bg-cyanAccent text-slate-950 shadow-md shadow-cyanAccent/20";
+            } else if (opacityVal < 0.7) {
+                document.getElementById('btn-hero-mid').className = "px-3 py-1 text-[10px] font-black rounded-full bg-cyanAccent text-slate-950 shadow-md shadow-cyanAccent/20";
+            } else {
+                document.getElementById('btn-hero-opaque').className = "px-3 py-1 text-[10px] font-black rounded-full bg-cyanAccent text-slate-950 shadow-md shadow-cyanAccent/20";
+            }
+        }
+
+        // Vector map rendering of Nédroma in the side panel
+        function drawNedromaVectorMap() {
+            const canvas = document.getElementById('nedroma-mini-map');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = 176;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Technical overlay grids
+            ctx.strokeStyle = 'rgba(0, 242, 254, 0.05)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 25) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+
+            // Glowing regional nodes lines
+            ctx.beginPath();
+            ctx.strokeStyle = '#00f2fe';
+            ctx.lineWidth = 2;
+            ctx.moveTo(30, 40);
+            ctx.lineTo(120, 80);
+            ctx.lineTo(240, 60);
+            ctx.lineTo(340, 130);
+            ctx.stroke();
+
+            // Sourcing raw silicates marker nodes
+            const coordinates = [
+                { x: 120, y: 80, label: "Unité R&D (Nédroma)", color: "#00f2fe" },
+                { x: 240, y: 60, label: "Tlemcen Hub", color: "#3b82f6" }
+            ];
+
+            coordinates.forEach(node => {
+                const animPhase = Date.now() * 0.003;
+                const pulseRadius = 4 + Math.abs(Math.sin(animPhase)) * 8;
+
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, pulseRadius, 0, Math.PI * 2);
+                ctx.fillStyle = node.color;
+                ctx.globalAlpha = 0.2;
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = node.color;
+                ctx.globalAlpha = 1.0;
+                ctx.fill();
+
+                ctx.font = "8px monospace";
+                ctx.fillStyle = "#ffffff";
+                ctx.fillText(node.label, node.x + 10, node.y + 3);
+            });
+        }
+
+        // Theme controller toggler logic
+        const themeBtn = document.getElementById('global-theme-toggle');
+        const themeIcon = document.getElementById('theme-btn-icon');
+
+        themeBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                themeIcon.className = "ph ph-moon text-lg text-slate-900";
+            } else {
+                document.documentElement.classList.add('dark');
+                themeIcon.className = "ph ph-sun text-lg text-cyanAccent";
+            }
+        });
+
+        // Mobile Nav Trigger action
+        const mobileNav = document.getElementById('mobile-nav');
+        const mobileNavTrigger = document.getElementById('mobile-menu-trigger');
+        const mobileNavIcon = document.getElementById('mobile-menu-icon');
+
+        mobileNavTrigger.addEventListener('click', () => {
+            const isHidden = mobileNav.classList.contains('hidden');
+            if (isHidden) {
+                mobileNav.classList.remove('hidden');
+                mobileNavIcon.className = "ph ph-x text-2xl";
+                mobileNavTrigger.setAttribute('aria-expanded', 'true');
+            } else {
+                mobileNav.classList.add('hidden');
+                mobileNavIcon.className = "ph ph-list text-2xl";
+                mobileNavTrigger.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Bootstrap on load
+        window.onload = function() {
+            // GSAP ScrollTrigger register
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Cinematic fade-in animations on load
+            gsap.from("#hero-main-title", { opacity: 0, y: 50, duration: 1.5, ease: "power4.out" });
+            gsap.from("#hero-sub-para", { opacity: 0, y: 30, duration: 1.5, delay: 0.3, ease: "power4.out" });
+
+            init3DFacade();
+            initCounters();
+            drawNedromaVectorMap();
+            runFinancialCalc();
+            updateDashboardSim();
+
+            setInterval(drawNedromaVectorMap, 1500);
+
+            // Sync original split picture slider coordinates bounding box
+            const rect = splitSlider.getBoundingClientRect();
+            afterImgResizer.style.width = `${rect.width}px`;
+        };
+    </script>
+</body>
+</html>
