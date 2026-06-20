@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroGlass — L'intelligence au service du vitrage | Smart Glass</title>
+    <meta name="description" content="Découvrez le verre électrochromique d'ElectroGlass. Contrôlez la lumière, optimisez l'efficacité énergétique et le confort de vos bâtiments intelligents à Tlemcen, Algérie.">
+    
+    <!-- Tailwind CSS pour un design responsive et ultra-moderne -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons pour les icônes vectorielles épurées -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0B1F3A',
+                            light: '#00BFFF',
+                            accent: '#1E293B',
+                            glass: 'rgba(11, 31, 58, 0.45)',
+                            glassBorder: 'rgba(0, 191, 255, 0.25)'
+                        }
+                    },
+                    backdropBlur: {
+                        xs: '2px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Styles de base et personnalisés */
+        body {
+            background-color: #030a16;
+            color: #f3f4f6;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Effets de Verre (Glassmorphism) */
+        .glassmorphism {
+            background: rgba(11, 31, 58, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 191, 255, 0.15);
+        }
+        
+        .glassmorphism-card {
+            background: rgba(15, 34, 64, 0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glassmorphism-card:hover {
+            border-color: rgba(0, 191, 255, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px -10px rgba(0, 191, 255, 0.25);
+        }
+        
+        /* Carte Holographique Interactive */
+        .digital-card {
+            background: linear-gradient(135deg, rgba(11, 31, 58, 0.8) 0%, rgba(3, 10, 22, 0.95) 1005);
+            border: 1.5px solid rgba(0, 191, 255, 0.35);
+            box-shadow: 0 0 30px rgba(0, 191, 255, 0.15), inset 0 0 20px rgba(0, 191, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .digital-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 191, 255, 0.15), transparent);
+            transform: rotate(45deg);
+            transition: 0.6s;
+            pointer-events: none;
+        }
+        
+        .digital-card:hover::before {
+            left: 100%;
+            top: 100%;
+        }
+
+        /* Barre de défilement stylisée */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030a16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0B1F3A;
+            border: 2px solid #030a16;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00BFFF;
+        }
+
+        /* Routage dynamique des sections */
+        .page-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .page-section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Transition de teinte du verre interactif */
+        .glass-pane {
+            transition: background-color 2s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 2s ease;
+        }
+        
+        /* Lumières diffuses en arrière-plan */
+        .light-glow {
+            filter: blur(120px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Éléments lumineux décoratifs d'arrière-plan -->
+    <div class="absolute top-0 left-1/4 w-[400px] h-[400px] bg-brand-light/5 rounded-full light-glow -z-10"></div>
+    <div class="absolute top-[800px] right-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full light-glow -z-10"></div>
+
+    <!-- Header / Barre de navigation fixe -->
+    <header class="fixed top-0 left-0 w-full z-50 glassmorphism transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="navigateTo('home')">
+                    <span class="text-2xl font-bold tracking-wider bg-gradient-to-r from-white via-blue-200 to-brand-light bg-clip-text text-transparent flex items-center gap-2">
+                        <i data-lucide="layers" class="text-brand-light animate-pulse"></i> ELECTRO<span class="text-brand-light">GLASS</span>
+                    </span>
+                </div>
+
+                <!-- Liens de navigation (Pas de "Projets" ou "Réalisations") -->
+                <nav class="hidden lg:flex space-x-1 xl:space-x-4 items-center">
+                    <button onclick="navigateTo('home')" data-nav="home" class="nav-link px-3 py-2 rounded-md text-sm font-semibold text-brand-light border-b-2 border-brand-light transition duration-150">Accueil</button>
+                    <button onclick="navigateTo('about')" data-nav="about" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white transition duration-150">À Propos</button>
+                    <button onclick="navigateTo('tech')" data-nav="tech" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white transition duration-150">Technologie</button>
+                    <button onclick="navigateTo('apps')" data-nav="apps" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white transition duration-150">Applications</button>
+                    <button onclick="navigateTo('gallery')" data-nav="gallery" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white transition duration-150 font-medium">Galerie</button>
+                    <button onclick="navigateTo('contact')" data-nav="contact" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white transition duration-150">Contact</button>
+                </nav>
+
+                <!-- Actions de navigation -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <!-- Bouton Appelez-nous -->
+                    <a href="tel:+213540333996" class="flex items-center gap-2 px-3.5 py-2 rounded-full border border-brand-light/35 hover:border-brand-light text-xs font-semibold text-brand-light hover:bg-brand-light/10 transition-all font-mono">
+                        <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+                        <span>Appelez-nous : +213 540 33 39 96</span>
+                    </a>
+
+                    <!-- Bouton de changement de langue -->
+                    <button id="langBtn" onclick="toggleLanguage()" class="flex items-center gap-1.5 px-3 py-2 rounded-full border border-gray-600 hover:border-brand-light text-xs font-semibold uppercase tracking-wider text-gray-300 transition-all">
+                        <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                        <span>EN</span>
+                    </button>
+                    
+                    <!-- Demander un devis -->
+                    <button onclick="navigateTo('contact', 'devis')" class="px-5 py-2.5 rounded-full bg-brand-light hover:bg-blue-400 text-brand-dark font-extrabold text-sm tracking-wide transition-all shadow-lg shadow-blue-500/20 hover:scale-105 active:scale-95 flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-4 h-4"></i> <span data-i18n="nav_quote">Demander un devis</span>
+                    </button>
+                </div>
+
+                <!-- Commandes Header Mobile -->
+                <div class="flex lg:hidden items-center space-x-2">
+                    <button onclick="toggleLanguage()" class="px-2.5 py-1.5 rounded border border-gray-600 text-xs font-semibold text-gray-300 uppercase">
+                        <span id="langBtnMobile">EN</span>
+                    </button>
+                    <button id="mobileMenuBtn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Hamburger Mobile -->
+        <div id="mobileMenu" class="hidden lg:hidden glassmorphism border-t border-brand-glassBorder px-4 pt-2 pb-6 space-y-2">
+            <button onclick="navigateTo('home')" data-nav-mobile="home" class="block w-full text-left px-4 py-2.5 rounded-md text-base font-semibold text-brand-light bg-brand-dark/40">Accueil</button>
+            <button onclick="navigateTo('about')" data-nav-mobile="about" class="block w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-300 hover:bg-brand-dark/20">À Propos</button>
+            <button onclick="navigateTo('tech')" data-nav-mobile="tech" class="block w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-300 hover:bg-brand-dark/20">Technologie</button>
+            <button onclick="navigateTo('apps')" data-nav-mobile="apps" class="block w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-300 hover:bg-brand-dark/20">Applications</button>
+            <button onclick="navigateTo('gallery')" data-nav-mobile="gallery" class="block w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-300 hover:bg-brand-dark/20">Galerie</button>
+            <button onclick="navigateTo('contact')" data-nav-mobile="contact" class="block w-full text-left px-4 py-2.5 rounded-md text-base font-medium text-gray-300 hover:bg-brand-dark/20">Contact</button>
+            
+            <div class="pt-4 space-y-3">
+                <a href="tel:+213540333996" class="w-full py-3 rounded-xl border border-brand-light/40 text-brand-light font-bold text-center flex items-center justify-center gap-2 font-mono">
+                    <i data-lucide="phone" class="w-5 h-5"></i> <span>+213 540 33 39 96</span>
+                </a>
+                <button onclick="navigateTo('contact', 'devis')" class="w-full py-3 rounded-xl bg-brand-light text-brand-dark font-bold text-center flex items-center justify-center gap-2">
+                    <i data-lucide="file-text" class="w-5 h-5"></i> <span data-i18n="nav_quote">Demander un devis</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow pt-20">
+
+        <!-- ================= PAGE 1: ACCUEIL ================= -->
+        <section id="page-home" class="page-section active">
+            <!-- Hero Section -->
+            <div class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-[#010714] via-[#051630] to-[#010a18] z-0"></div>
+                <!-- Grille d'arrière-plan simulant un vitrage technologique -->
+                <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#00BFFF_1px,transparent_1px)] [background-size:24px_24px] z-0"></div>
+                
+                <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+                    <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-xs sm:text-sm text-brand-light font-semibold mb-6 uppercase tracking-widest animate-pulse">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i> <span data-i18n="hero_tag">L'avenir du vitrage intelligent</span>
+                    </span>
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+                        <span class="block">ElectroGlass</span>
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-brand-light to-blue-400 mt-2" data-i18n="hero_title_2">L'intelligence au service du vitrage</span>
+                    </h1>
+                    <p class="max-w-3xl mx-auto text-lg sm:text-xl text-gray-300 mb-10 leading-relaxed" data-i18n="hero_desc">
+                        Contrôlez la lumière, le confort et l'efficacité énergétique grâce au verre électrochromique de pointe.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                        <button onclick="navigateTo('tech')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-brand-light hover:bg-blue-400 text-brand-dark font-extrabold text-lg tracking-wide transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20">
+                            <span data-i18n="hero_cta_1">Découvrir la technologie</span> <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="navigateTo('contact')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-transparent hover:bg-white/5 border-2 border-white/20 hover:border-white/40 text-white font-bold text-lg tracking-wide transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                            <span data-i18n="hero_cta_2">Nous contacter</span> <i data-lucide="mail" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Indicateur de Scroll -->
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400 opacity-60">
+                    <span class="text-xs tracking-widest uppercase" data-i18n="scroll_down">Faites défiler</span>
+                    <div class="w-6 h-10 border-2 border-gray-400 rounded-full p-1 flex justify-center">
+                        <div class="w-1.5 h-3 bg-brand-light rounded-full animate-bounce"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Avantages (Électrochromisme) -->
+            <div class="py-24 bg-brand-dark/15 relative border-y border-white/5">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl sm:text-5xl font-bold mb-4 text-white" data-i18n="features_title">Pourquoi choisir ElectroGlass ?</h2>
+                        <div class="h-1 w-24 bg-brand-light mx-auto rounded-full mb-4"></div>
+                        <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="features_subtitle">Le verre électrochromique apporte une réponse optimale aux enjeux architecturaux, thermiques et environnementaux d'aujourd'hui.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="glassmorphism-card p-8 rounded-2xl flex flex-col items-start">
+                            <div class="p-4 rounded-xl bg-blue-500/10 text-brand-light mb-6">
+                                <i data-lucide="sun" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="feat_1_title">Réduction de l'éblouissement</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed" data-i18n="feat_1_desc">Ajustement instantané et automatique de la teinte pour éliminer l'éblouissement sans masquer la vue extérieure.</p>
+                        </div>
+
+                        <div class="glassmorphism-card p-8 rounded-2xl flex flex-col items-start">
+                            <div class="p-4 rounded-xl bg-blue-500/10 text-brand-light mb-6">
+                                <i data-lucide="zap" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="feat_2_title">Économies d'énergie</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed" data-i18n="feat_2_desc">Réduction drastique de la consommation liée à la climatisation et à l'éclairage artificiel (jusqu'à -30%).</p>
+                        </div>
+
+                        <div class="glassmorphism-card p-8 rounded-2xl flex flex-col items-start">
+                            <div class="p-4 rounded-xl bg-blue-500/10 text-brand-light mb-6">
+                                <i data-lucide="thermometer" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="feat_3_title">Confort thermique optimal</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed" data-i18n="feat_3_desc">Régulation passive du transfert de chaleur solaire pour garder les intérieurs naturellement frais en été et doux en hiver.</p>
+                        </div>
+
+                        <div class="glassmorphism-card p-8 rounded-2xl flex flex-col items-start">
+                            <div class="p-4 rounded-xl bg-blue-500/10 text-brand-light mb-6">
+                                <i data-lucide="layout" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="feat_4_title">Design & Pureté épurée</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed" data-i18n="feat_4_desc">Plus besoin de stores, de rideaux ou de brise-soleil encombrants. Valorisez la pureté architecturale de vos projets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section NOUVELLE : Performances Énergétiques & Confort des Bâtiments Intelligents -->
+            <div class="py-24 relative overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6">
+                            <span class="text-xs font-bold uppercase tracking-widest text-brand-light" data-i18n="perf_tag">Transition Énergétique</span>
+                            <h2 class="text-3xl sm:text-5xl font-bold text-white leading-tight" data-i18n="perf_title">L'efficacité passive au service du climat</h2>
+                            <p class="text-gray-300 leading-relaxed" data-i18n="perf_desc_1">
+                                Le verre électrochromique n'est pas qu'un élément de design futuriste. Il agit comme un régulateur de flux thermiques dynamique, réduisant de manière passive les charges calorifiques subies par les façades exposées.
+                            </p>
+                            <div class="space-y-4">
+                                <div class="flex gap-4 items-start">
+                                    <div class="p-2 bg-brand-light/10 text-brand-light rounded-lg">
+                                        <i data-lucide="trending-down" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white" data-i18n="perf_point_1_title">Consommation HVAC réduite de 28%</h4>
+                                        <p class="text-sm text-gray-400" data-i18n="perf_point_1_desc">Réduction directe de la consommation électrique des climatiseurs industriels en bloquant l'irradiation infrarouge directe.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 items-start">
+                                    <div class="p-2 bg-brand-light/10 text-brand-light rounded-lg">
+                                        <i data-lucide="sun-dim" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white" data-i18n="perf_point_2_title">Lumière du jour optimisée</h4>
+                                        <p class="text-sm text-gray-400" data-i18n="perf_point_2_desc">Laisse passer la lumière naturelle visible tout en rejetant la chaleur invisible, éliminant ainsi le besoin d'éclairage artificiel diurne.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="glassmorphism p-8 rounded-3xl border border-brand-glassBorder relative">
+                            <!-- Visualisation conceptuelle de la performance énergétique -->
+                            <div class="absolute -top-4 -left-4 bg-brand-light text-brand-dark font-extrabold text-xs uppercase px-3 py-1.5 rounded-full tracking-wider" data-i18n="perf_badge">Calculs d'Ingénierie</div>
+                            <div class="space-y-6 pt-4">
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">
+                                        <span data-i18n="perf_bar_1">Rejet de chaleur solaire (Teinté au Max)</span>
+                                        <span class="text-brand-light font-bold">90%</span>
+                                    </div>
+                                    <div class="w-full bg-brand-dark/50 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-brand-light h-full w-[90%] rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">
+                                        <span data-i18n="perf_bar_2">Transmission de lumière visible (Clair)</span>
+                                        <span class="text-brand-light font-bold">68%</span>
+                                    </div>
+                                    <div class="w-full bg-brand-dark/50 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-brand-light h-full w-[68%] rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">
+                                        <span data-i18n="perf_bar_3">Filtration des rayons UV destructeurs</span>
+                                        <span class="text-brand-light font-bold">99.5%</span>
+                                    </div>
+                                    <div class="w-full bg-brand-dark/50 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-brand-light h-full w-[99.5%] rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistiques animées -->
+            <div class="py-20 relative overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="glassmorphism rounded-3xl p-10 md:p-16 border border-brand-glassBorder relative">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                            <div>
+                                <span class="block text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-light mb-2">30%</span>
+                                <span class="text-xs sm:text-sm font-semibold uppercase text-gray-400 tracking-wider" data-i18n="stat_1_lbl">Économies d'Énergie</span>
+                            </div>
+                            <div>
+                                <span class="block text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-light mb-2">99%</span>
+                                <span class="text-xs sm:text-sm font-semibold uppercase text-gray-400 tracking-wider" data-i18n="stat_2_lbl">Filtration des UV</span>
+                            </div>
+                            <div>
+                                <span class="block text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-light mb-2">0.1s</span>
+                                <span class="text-xs sm:text-sm font-semibold uppercase text-gray-400 tracking-wider" data-i18n="stat_3_lbl">Réactivité Électrique</span>
+                            </div>
+                            <div>
+                                <span class="block text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-light mb-2">15+</span>
+                                <span class="text-xs sm:text-sm font-semibold uppercase text-gray-400 tracking-wider" data-i18n="stat_4_lbl">Ans de R&D</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2: À PROPOS ================= -->
+        <section id="page-about" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center mb-16">
+                    <span class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-brand-light" data-i18n="about_tag">Notre Histoire</span>
+                    <h2 class="text-3xl sm:text-5xl font-bold mt-2 text-white" data-i18n="about_title">Pionnier de l'innovation verrière</h2>
+                    <div class="h-1 w-24 bg-brand-light mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24">
+                    <div>
+                        <h3 class="text-2xl sm:text-3xl font-bold mb-6 text-white" data-i18n="about_sub_1">Notre Mission</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6" data-i18n="about_p1">
+                            Fondée avec l'ambition de redéfinir la relation entre l'architecture, la lumière et l'énergie, ElectroGlass conçoit, fabrique et commercialise des solutions de vitrage dynamique intelligent à haute valeur technologique.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed mb-6" data-i18n="about_p2">
+                            Nos technologies électrochromiques exclusives s'intègrent de manière invisible dans les bâtiments du futur pour offrir un confort utilisateur inégalé tout en répondant aux enjeux environnementaux les plus stricts en matière de décarbonation.
+                        </p>
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-brand-light/10 border-l-4 border-brand-light">
+                            <i data-lucide="leaf" class="w-8 h-8 text-brand-light shrink-0"></i>
+                            <p class="text-sm font-medium text-gray-200" data-i18n="about_banner">Chaque mètre carré de verre ElectroGlass installé contribue directement à la réduction de l'empreinte carbone globale du bâtiment.</p>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="relative aspect-video rounded-2xl overflow-hidden shadow-2xl border border-brand-glassBorder">
+                            <!-- Visualisation conceptuelle d'un panneau d'architecture sans désigner un projet client -->
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" alt="Concept architecture smart glass" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-blue-950/70 backdrop-blur-xs flex items-center justify-center">
+                                <div class="text-center p-6">
+                                    <span class="text-xs font-bold uppercase tracking-widest text-brand-light block mb-2" data-i18n="about_demo_title">Simulateur de transition</span>
+                                    <span class="text-2xl font-bold text-white">ElectroGlass Active™</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-500/20 rounded-full filter blur-xl -z-10"></div>
+                        <div class="absolute -top-6 -left-6 w-24 h-24 bg-brand-light/20 rounded-full filter blur-lg -z-10"></div>
+                    </div>
+                </div>
+
+                <!-- Objectifs de développement durable d'ElectroGlass -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glassmorphism p-8 rounded-2xl border border-brand-glassBorder/50">
+                        <div class="p-3 rounded-lg bg-blue-500/10 text-brand-light w-fit mb-6">
+                            <i data-lucide="eye" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 text-white" data-i18n="vision_1_t">Vision à long terme</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed" data-i18n="vision_1_d">Devenir le leader mondial de la technologie verrière électroactive en rendant le vitrage intelligent accessible à tous les segments du bâtiment.</p>
+                    </div>
+
+                    <div class="glassmorphism p-8 rounded-2xl border border-brand-glassBorder/50">
+                        <div class="p-3 rounded-lg bg-blue-500/10 text-brand-light w-fit mb-6">
+                            <i data-lucide="activity" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 text-white" data-i18n="vision_2_t">Innovation continue</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed" data-i18n="vision_2_d">Investir plus de 20% de nos revenus dans la recherche et le développement de couches nanométriques encore plus performantes.</p>
+                    </div>
+
+                    <div class="glassmorphism p-8 rounded-2xl border border-brand-glassBorder/50">
+                        <div class="p-3 rounded-lg bg-blue-500/10 text-brand-light w-fit mb-6">
+                            <i data-lucide="globe" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 text-white" data-i18n="vision_3_t">Engagement Planétaire</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed" data-i18n="vision_3_d">Créer des cycles de production écologiques et valoriser des processus de recyclage intégrés pour l'ensemble de nos vitrages intelligents.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 3: TECHNOLOGIE ================= -->
+        <section id="page-tech" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center mb-16">
+                    <span class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-brand-light" data-i18n="tech_tag">Comment ça marche</span>
+                    <h2 class="text-3xl sm:text-5xl font-bold mt-2 text-white" data-i18n="tech_title">La science de l'électrochromisme</h2>
+                    <div class="h-1 w-24 bg-brand-light mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <!-- Simulateur de transition dynamique moléculaire -->
+                <div class="glassmorphism rounded-3xl p-8 md:p-12 border border-brand-glassBorder mb-16 font-sans">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-6" data-i18n="sim_title">Simulez le vitrage en temps réel</h3>
+                            <p class="text-gray-300 leading-relaxed mb-8" data-i18n="sim_desc">
+                                En appliquant une très faible tension électrique (moins de 5V), les ions lithium se déplacent à travers les couches actives du verre, modifiant de manière contrôlée sa teinte et sa capacité à bloquer l'énergie solaire thermique.
+                            </p>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-300 mb-2" data-i18n="sim_slider_lbl">Niveau de teinte :</label>
+                                    <input type="range" id="tintRange" min="0" max="100" value="0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-brand-light">
+                                    <div class="flex justify-between text-xs text-gray-400 mt-2 font-mono">
+                                        <span data-i18n="sim_state_clear">Transparent (Clair)</span>
+                                        <span data-i18n="sim_state_dark">Teinté (Opaque)</span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <button onclick="setSimulationTint(0)" class="flex-1 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-sm font-bold text-white transition-all" data-i18n="sim_btn_clear">Effacer la teinte</button>
+                                    <button onclick="setSimulationTint(100)" class="flex-1 py-2 rounded-xl bg-brand-light hover:bg-blue-400 text-sm font-bold text-brand-dark transition-all" data-i18n="sim_btn_dark">Teinter au max</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fenêtre interactive simulée -->
+                        <div class="relative w-full aspect-square md:aspect-video lg:aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-inner">
+                            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80" alt="Simulation vitrage intelligent" class="absolute inset-0 w-full h-full object-cover">
+                            
+                            <div id="interactiveGlass" class="absolute inset-0 glass-pane flex flex-col justify-between p-6" style="background-color: rgba(11, 31, 58, 0); backdrop-filter: blur(0px);">
+                                <div class="flex justify-between items-start">
+                                    <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-xs font-semibold text-brand-light border border-brand-light/30 flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-brand-light animate-ping"></span>
+                                        <span data-i18n="sim_glass_status">Verre : Actif</span>
+                                    </span>
+                                    <span id="tintPercent" class="text-xl font-mono font-bold text-white bg-black/60 px-2 py-1 rounded-md">0%</span>
+                                </div>
+                                <div class="bg-black/60 backdrop-blur-md p-4 rounded-xl text-xs sm:text-sm text-gray-200 border border-white/5">
+                                    <strong class="block text-brand-light mb-1" data-i18n="sim_feedback_t">Effet observé :</strong>
+                                    <span id="simulationFeedback" data-i18n="sim_fb_0">Visibilité et apport solaire thermique maximisés pour chauffer naturellement l'intérieur.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coupe Nanométrique de la Technologie Électroactive -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-6" data-i18n="layers_title">L'architecture nanométrique</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6" data-i18n="layers_desc">
+                            Le vitrage ElectroGlass est constitué de deux feuilles de verre enserrant un empilement de 5 couches invisibles, dont l'épaisseur totale n'excède pas un micron.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex gap-4 p-4 rounded-xl bg-brand-dark/30 hover:bg-brand-dark/50 transition duration-200">
+                                <span class="w-8 h-8 rounded-full bg-brand-light/20 text-brand-light font-bold flex items-center justify-center shrink-0">1</span>
+                                <div>
+                                    <strong class="text-white block text-base" data-i18n="layer_1_t">Couches conductrices transparentes (TCO)</strong>
+                                    <span class="text-sm text-gray-400" data-i18n="layer_1_d">Transmettent le courant électrique de manière parfaitement homogène sur toute la surface vitrée.</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 rounded-xl bg-brand-dark/30 hover:bg-brand-dark/50 transition duration-200">
+                                <span class="w-8 h-8 rounded-full bg-brand-light/20 text-brand-light font-bold flex items-center justify-center shrink-0">2</span>
+                                <div>
+                                    <strong class="text-white block text-base" data-i18n="layer_2_t">Couche Électrochromique (Matériau Actif)</strong>
+                                    <span class="text-sm text-gray-400" data-i18n="layer_2_d">Contient l'oxyde de tungstène qui se teinte sous l'effet de l'insertion d'ions.</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 rounded-xl bg-brand-dark/30 hover:bg-brand-dark/50 transition duration-200">
+                                <span class="w-8 h-8 rounded-full bg-brand-light/20 text-brand-light font-bold flex items-center justify-center shrink-0">3</span>
+                                <div>
+                                    <strong class="text-white block text-base" data-i18n="layer_3_t">Électrolyte solide conducteur ionique</strong>
+                                    <span class="text-sm text-gray-400" data-i18n="layer_3_d">Facilite le transit rapide des ions lithium lors des phases d'activation/désactivation.</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 rounded-xl bg-brand-dark/30 hover:bg-brand-dark/50 transition duration-200">
+                                <span class="w-8 h-8 rounded-full bg-brand-light/20 text-brand-light font-bold flex items-center justify-center shrink-0">4</span>
+                                <div>
+                                    <strong class="text-white block text-base" data-i18n="layer_4_t">Contre-électrode de stockage d'ions</strong>
+                                    <span class="text-sm text-gray-400" data-i18n="layer_4_d">Héberge les ions de manière stable lorsque le vitrage est configuré en mode transparent.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Schéma Vectoriel en Coupe (SVG) -->
+                    <div class="glassmorphism p-8 rounded-2xl border border-brand-glassBorder flex flex-col items-center">
+                        <span class="text-sm font-bold uppercase tracking-wider text-brand-light mb-6" data-i18n="diag_title">Coupe Transversale du Vitrage</span>
+                        <svg viewBox="0 0 400 400" class="w-full max-w-[320px] h-auto">
+                            <rect x="20" y="20" width="360" height="40" rx="4" fill="#00BFFF" opacity="0.15" stroke="#00BFFF" stroke-width="2"/>
+                            <text x="200" y="45" fill="#ffffff" font-size="12" text-anchor="middle" font-weight="bold">Verre Extérieur Protection</text>
+                            
+                            <rect x="50" y="90" width="300" height="25" rx="2" fill="#E2E8F0" opacity="0.3" stroke="#CBD5E1" stroke-width="1"/>
+                            <text x="200" y="107" fill="#E2E8F0" font-size="10" text-anchor="middle">Couche Conductrice (TCO +)</text>
+                            
+                            <rect x="50" y="135" width="300" height="30" rx="2" fill="#1E40AF" opacity="0.8" stroke="#1D4ED8" stroke-width="1"/>
+                            <text x="200" y="153" fill="#ffffff" font-size="10" text-anchor="middle" font-weight="bold">Oxyde Électrochromique (Teinte)</text>
+
+                            <rect x="50" y="185" width="300" height="25" rx="2" fill="#10B981" opacity="0.4" stroke="#059669" stroke-width="1"/>
+                            <text x="200" y="201" fill="#A7F3D0" font-size="10" text-anchor="middle">Électrolyte Solide (Transfert Ionique)</text>
+
+                            <rect x="50" y="230" width="300" height="30" rx="2" fill="#1E40AF" opacity="0.3" stroke="#1D4ED8" stroke-width="1"/>
+                            <text x="200" y="248" fill="#ffffff" font-size="10" text-anchor="middle">Contre-Électrode (Stockage Ions)</text>
+
+                            <rect x="50" y="280" width="300" height="25" rx="2" fill="#E2E8F0" opacity="0.3" stroke="#CBD5E1" stroke-width="1"/>
+                            <text x="200" y="297" fill="#E2E8F0" font-size="10" text-anchor="middle">Couche Conductrice (TCO -)</text>
+
+                            <rect x="20" y="335" width="360" height="40" rx="4" fill="#00BFFF" opacity="0.15" stroke="#00BFFF" stroke-width="2"/>
+                            <text x="200" y="360" fill="#ffffff" font-size="12" text-anchor="middle" font-weight="bold">Verre Intérieur Protection</text>
+                        </svg>
+                        <p class="text-xs text-gray-400 mt-6 text-center" data-i18n="diag_legend">Schéma conceptuel des nanocouches actives. Epaisseur réelle : &lt; 1 micromètre.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 4: APPLICATIONS ================= -->
+        <section id="page-apps" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center mb-16">
+                    <span class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-brand-light" data-i18n="apps_tag">Champs d'application</span>
+                    <h2 class="text-3xl sm:text-5xl font-bold mt-2 text-white" data-i18n="apps_title">L'innovation au cœur de vos structures</h2>
+                    <div class="h-1 w-24 bg-brand-light mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- App 1: Smart Offices -->
+                    <div class="glassmorphism-card rounded-2xl overflow-hidden flex flex-col justify-between h-full">
+                        <div class="relative h-60 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Concept bureaux intelligents" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="app_1_title">Bureaux intelligents & Salles de réunion</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed" data-i18n="app_1_desc">Passez d'un espace de travail transparent à une salle de conférence totalement isolée visuellement en moins d'une seconde.</p>
+                        </div>
+                    </div>
+
+                    <!-- App 2: Façades -->
+                    <div class="glassmorphism-card rounded-2xl overflow-hidden flex flex-col justify-between h-full">
+                        <div class="relative h-60 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="Concept façade intelligente" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="app_2_title">Façades Architecturales Actives</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed" data-i18n="app_2_desc">Gestion dynamique de la luminosité et du rayonnement thermique des gratte-ciel pour réduire la dépendance à la climatisation.</p>
+                        </div>
+                    </div>
+
+                    <!-- App 3: Hôpitaux -->
+                    <div class="glassmorphism-card rounded-2xl overflow-hidden flex flex-col justify-between h-full">
+                        <div class="relative h-60 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" alt="Concept secteur médical stérile" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="app_3_title">Secteur Médical & Hôpitaux</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed" data-i18n="app_3_desc">Offre une barrière d'intimité stérile et hygiénique, remplaçant idéalement les stores en tissu porteurs d'agents pathogènes.</p>
+                        </div>
+                    </div>
+
+                    <!-- App 4: Hôtels -->
+                    <div class="glassmorphism-card rounded-2xl overflow-hidden flex flex-col justify-between h-full">
+                        <div class="relative h-60 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" alt="Concept suite d'hôtel prestige" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="app_4_title">Hôtels de Prestige</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed" data-i18n="app_4_desc">Créez des ambiances immersives de luxe dans les suites d'hôtels grâce à un contrôle domotique de l'intimité et de la lumière.</p>
+                        </div>
+                    </div>
+
+                    <!-- App 5: Aéroports -->
+                    <div class="glassmorphism-card rounded-2xl overflow-hidden flex flex-col justify-between h-full">
+                        <div class="relative h-60 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" alt="Concept terminal aéroport" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="app_5_title">Aéroports & Infrastructures publiques</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed" data-i18n="app_5_desc">Régule la température des immenses halls d'embarquement vitrés tout en évitant l'inconfort visuel des passagers.</p>
+                        </div>
+                    </div>
+
+                    <!-- App 6: Villas -->
+                    <div class="glassmorphism-card rounded-2xl overflow-hidden flex flex-col justify-between h-full">
+                        <div class="relative h-60 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" alt="Concept villa prestige vitrée" class="absolute inset-0 w-full h-full object-cover transition-all duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold mb-3 text-white" data-i18n="app_6_title">Villas & Résidences d'exception</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed" data-i18n="app_6_desc">Intégrez la technologie pour vivre en accord parfait avec l'environnement extérieur sans jamais compromettre votre vie privée.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 5: GALERIE CONCEPTUELLE ================= -->
+        <section id="page-gallery" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center mb-16">
+                    <span class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-brand-light" data-i18n="gallery_tag">Visuels d'exception</span>
+                    <h2 class="text-3xl sm:text-5xl font-bold mt-2 text-white" data-i18n="gallery_title">Galerie Technologique & Moléculaire</h2>
+                    <div class="h-1 w-24 bg-brand-light mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <!-- Panneau vidéo de démonstration conceptuelle -->
+                <div class="mb-16 glassmorphism rounded-3xl p-6 border border-brand-glassBorder/60 max-w-4xl mx-auto">
+                    <div class="relative aspect-video rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80" alt="Salle de conférence technologique" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-brand-dark/50 flex flex-col items-center justify-center p-6 text-center">
+                            <button onclick="openVideoDemo()" class="w-20 h-20 rounded-full bg-brand-light hover:bg-blue-400 text-brand-dark flex items-center justify-center shadow-lg shadow-blue-500/30 transition-all hover:scale-110 active:scale-95 mb-4 z-10">
+                                <i data-lucide="play" class="w-8 h-8 fill-brand-dark ml-1"></i>
+                            </button>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white mb-2" data-i18n="demo_video_title">Démonstration technologique</h3>
+                            <p class="text-xs sm:text-sm text-gray-300 max-w-md" data-i18n="demo_video_desc">Découvrez en conditions réelles comment nos vitrages s'adaptent instantanément aux variations climatiques.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grille de concepts (Pas de références aux projets clients passés ni de localisations) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Concept 1 -->
+                    <div onclick="openLightbox('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80', 'Régulation Moléculaire Active — Teinte Minimale')" class="group relative rounded-2xl overflow-hidden cursor-pointer border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="Teinte Minimale" class="w-full h-72 object-cover transition duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
+                            <div>
+                                <h4 class="text-white font-bold text-lg" data-i18n="g_img_1_title">Régulation Moléculaire</h4>
+                                <p class="text-brand-light text-sm" data-i18n="g_img_1_desc">Teinte Minimale (Tension 0.5V)</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 p-2 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10 opacity-0 group-hover:opacity-100 transition-all">
+                            <i data-lucide="zoom-in" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <!-- Concept 2 -->
+                    <div onclick="openLightbox('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80', 'Régulation Moléculaire Active — Teinte Intermédiaire')" class="group relative rounded-2xl overflow-hidden cursor-pointer border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Teinte Intermédiaire" class="w-full h-72 object-cover transition duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
+                            <div>
+                                <h4 class="text-white font-bold text-lg" data-i18n="g_img_2_title">Régulation Moléculaire</h4>
+                                <p class="text-brand-light text-sm" data-i18n="g_img_2_desc">Teinte Intermédiaire (Tension 2.5V)</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 p-2 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10 opacity-0 group-hover:opacity-100 transition-all">
+                            <i data-lucide="zoom-in" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <!-- Concept 3 -->
+                    <div onclick="openLightbox('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', 'Régulation Moléculaire Active — Teinte Maximale')" class="group relative rounded-2xl overflow-hidden cursor-pointer border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" alt="Teinte Maximale" class="w-full h-72 object-cover transition duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
+                            <div>
+                                <h4 class="text-white font-bold text-lg" data-i18n="g_img_3_title">Régulation Moléculaire</h4>
+                                <p class="text-brand-light text-sm" data-i18n="g_img_3_desc">Teinte Maximale (Tension 5V)</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 p-2 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10 opacity-0 group-hover:opacity-100 transition-all">
+                            <i data-lucide="zoom-in" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <!-- Concept 4 -->
+                    <div onclick="openLightbox('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80', 'Structure de Cloison Intelligente en Verre Dépoli')" class="group relative rounded-2xl overflow-hidden cursor-pointer border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" alt="Cloison dépolie" class="w-full h-72 object-cover transition duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
+                            <div>
+                                <h4 class="text-white font-bold text-lg" data-i18n="g_img_4_title">Verre Électro-Dépoli</h4>
+                                <p class="text-brand-light text-sm" data-i18n="g_img_4_desc">Contrôle de l'intimité par diffusion lumineuse</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 p-2 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10 opacity-0 group-hover:opacity-100 transition-all">
+                            <i data-lucide="zoom-in" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <!-- Concept 5 -->
+                    <div onclick="openLightbox('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80', 'Réfraction Solaire Contrôlée par Facettes Actives')" class="group relative rounded-2xl overflow-hidden cursor-pointer border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" alt="Réfraction" class="w-full h-72 object-cover transition duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
+                            <div>
+                                <h4 class="text-white font-bold text-lg" data-i18n="g_img_5_title">Réfraction Contrôlée</h4>
+                                <p class="text-brand-light text-sm" data-i18n="g_img_5_desc">Absorption passive de l'énergie thermique infrarouge</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 p-2 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10 opacity-0 group-hover:opacity-100 transition-all">
+                            <i data-lucide="zoom-in" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <!-- Concept 6 -->
+                    <div onclick="openLightbox('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80', 'Concept d\'Intégration d\'Écrans Transparents HUD')" class="group relative rounded-2xl overflow-hidden cursor-pointer border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" alt="Intégration HUD" class="w-full h-72 object-cover transition duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
+                            <div>
+                                <h4 class="text-white font-bold text-lg" data-i18n="g_img_6_title">Intégration HUD (Heads-Up)</h4>
+                                <p class="text-brand-light text-sm" data-i18n="g_img_6_desc">Combinaison électrochromique et d'affichage transparent</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 p-2 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/10 opacity-0 group-hover:opacity-100 transition-all">
+                            <i data-lucide="zoom-in" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 6: CONTACT & DEVIS ================= -->
+        <section id="page-contact" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center mb-16">
+                    <span class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-brand-light" data-i18n="contact_tag">Parlons de votre projet</span>
+                    <h2 class="text-3xl sm:text-5xl font-bold mt-2 text-white" data-i18n="contact_title">Nous contacter & Demande de devis</h2>
+                    <div class="h-1 w-24 bg-brand-light mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <!-- Informations et carte interactive -->
+                    <div class="space-y-8">
+                        <!-- CARTE DE VISITE NUMÉRIQUE INTERACTIVE -->
+                        <div class="digital-card rounded-3xl p-8 relative overflow-hidden">
+                            <div class="absolute top-4 right-4 opacity-10">
+                                <i data-lucide="layers" class="w-24 h-24 text-brand-light"></i>
+                            </div>
+                            <div class="mb-6">
+                                <span class="text-xs uppercase tracking-widest text-brand-light font-bold">Smart Glass Technology</span>
+                                <h3 class="text-3xl font-extrabold text-white tracking-wider mt-1">ElectroGlass</h3>
+                                <p class="text-xs text-gray-400 mt-1" data-i18n="card_subtitle">Conception & Intégration de verre électrochromique</p>
+                            </div>
+
+                            <div class="space-y-4 border-t border-brand-light/20 pt-6">
+                                <div class="flex items-center gap-4 text-gray-200">
+                                    <div class="p-2.5 rounded-xl bg-brand-light/10 text-brand-light">
+                                        <i data-lucide="phone" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-[10px] text-gray-400 uppercase tracking-widest" data-i18n="card_phone">Téléphone</span>
+                                        <a href="tel:+213540333996" class="font-mono text-base hover:text-brand-light transition">+213 540 33 39 96</a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4 text-gray-200">
+                                    <div class="p-2.5 rounded-xl bg-brand-light/10 text-brand-light">
+                                        <i data-lucide="mail" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-[10px] text-gray-400 uppercase tracking-widest">E-mail</span>
+                                        <a href="mailto:contact@electroglass.dz" class="text-base hover:text-brand-light transition">contact@electroglass.dz</a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4 text-gray-200">
+                                    <div class="p-2.5 rounded-xl bg-brand-light/10 text-brand-light">
+                                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-[10px] text-gray-400 uppercase tracking-widest" data-i18n="card_address">Adresse</span>
+                                        <span class="text-base">Tlemcen, Algérie</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 flex gap-3">
+                                <a href="tel:+213540333996" class="flex-1 py-3 rounded-xl bg-brand-light text-brand-dark font-extrabold text-xs text-center uppercase tracking-wider hover:bg-blue-400 transition-all flex items-center justify-center gap-1.5 shadow-md shadow-blue-500/15">
+                                    <i data-lucide="phone-call" class="w-4 h-4"></i> <span data-i18n="card_btn_call">Appeler</span>
+                                </a>
+                                <a href="https://wa.me/213540333996" target="_blank" class="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs text-center uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/15">
+                                    <i data-lucide="message-square" class="w-4 h-4"></i> <span>WhatsApp</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Intégration de la carte de Tlemcen -->
+                        <div class="rounded-3xl overflow-hidden border border-brand-glassBorder h-[280px]">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d104994.8422472917!2d-1.39343058866386!3d34.87766347395642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7f01784ca4a0b3%3A0xc6cbfa2166f2fbfd!2sTlemcen!5e0!3m2!1sfr!2sdz!4v1700000000000!5m2!1sfr!2sdz" 
+                                class="w-full h-full border-0" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <!-- Formulaire de Contact et Devis -->
+                    <div id="contact-form-container" class="glassmorphism p-8 rounded-3xl border border-brand-glassBorder">
+                        <h3 class="text-2xl font-bold text-white mb-6" id="formHeader" data-i18n="form_title_contact">Envoyer un message à ElectroGlass</h3>
+                        
+                        <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-300 mb-2" data-i18n="form_name">Nom complet</label>
+                                    <input type="text" id="formName" required class="w-full px-4 py-3 rounded-xl bg-brand-dark/60 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-light transition">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-300 mb-2" data-i18n="form_email">Email</label>
+                                    <input type="email" id="formEmail" required class="w-full px-4 py-3 rounded-xl bg-brand-dark/60 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-light transition">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-300 mb-2" data-i18n="form_phone_user">Numéro de téléphone</label>
+                                    <input type="tel" id="formPhoneUser" class="w-full px-4 py-3 rounded-xl bg-brand-dark/60 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-light transition" placeholder="+213...">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-300 mb-2" data-i18n="form_subject">Sujet de votre message</label>
+                                    <select id="formSubject" class="w-full px-4 py-3 rounded-xl bg-brand-dark/60 border border-white/10 text-white focus:outline-none focus:border-brand-light transition">
+                                        <option value="devis" data-i18n="opt_quote">Demander un devis personnalisé</option>
+                                        <option value="info" data-i18n="opt_info">Renseignement d'ordre technique</option>
+                                        <option value="partenariat" data-i18n="opt_partner">Proposition de partenariat</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-300 mb-2" data-i18n="form_message">Message ou détails du projet</label>
+                                <textarea id="formMessageText" rows="4" required class="w-full px-4 py-3 rounded-xl bg-brand-dark/60 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-light transition"></textarea>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" required id="rgpd" class="mt-1 accent-brand-light cursor-pointer w-4 h-4 rounded">
+                                <label for="rgpd" class="text-xs text-gray-400 cursor-pointer" data-i18n="form_agree">En soumettant ce formulaire, j'accepte que mes informations soient traitées dans le strict respect de la charte de confidentialité d'ElectroGlass.</label>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 rounded-xl bg-brand-light hover:bg-blue-400 text-brand-dark font-extrabold text-base tracking-wide transition shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
+                                <i data-lucide="send" class="w-5 h-5"></i> <span data-i18n="form_submit_btn">Envoyer la demande</span>
+                            </button>
+                        </form>
+                        
+                        <!-- Succès d'envoi -->
+                        <div id="formSuccess" class="hidden mt-6 p-4 rounded-xl bg-green-500/20 border border-green-500/40 text-green-300 text-sm flex items-start gap-3 animate-fade-in">
+                            <i data-lucide="check-circle" class="w-5 h-5 shrink-0 mt-0.5"></i>
+                            <div>
+                                <strong class="block font-bold mb-1" data-i18n="success_t">Message transmis avec succès !</strong>
+                                <span data-i18n="success_d">Notre équipe commerciale vous contactera dans les plus brefs délais pour étudier votre cahier des charges.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pied de page (Footer conforme avec informations demandées) -->
+    <footer class="bg-[#020712] border-t border-brand-glassBorder/40 py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="text-xl font-bold tracking-wider text-white flex items-center gap-2 mb-4">
+                        <i data-lucide="layers" class="text-brand-light"></i> ELECTRO<span class="text-brand-light">GLASS</span>
+                    </span>
+                    <p class="text-xs text-gray-400 leading-relaxed" data-i18n="footer_desc">La technologie verrière intelligente au service de l'architecture éco-responsable de demain.</p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-4 uppercase tracking-widest" data-i18n="footer_menu">Navigation</h4>
+                    <ul class="space-y-2 text-xs text-gray-400">
+                        <li><button onclick="navigateTo('home')" class="hover:text-brand-light">Accueil</button></li>
+                        <li><button onclick="navigateTo('about')" class="hover:text-brand-light">À Propos</button></li>
+                        <li><button onclick="navigateTo('tech')" class="hover:text-brand-light">Technologie</button></li>
+                        <li><button onclick="navigateTo('apps')" class="hover:text-brand-light">Applications</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-4 uppercase tracking-widest" data-i18n="footer_contact">Contact</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Tlemcen, Algérie.<br>
+                        contact@electroglass.dz<br>
+                        +213 540 33 39 96
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-4 uppercase tracking-widest" data-i18n="footer_eco">Éco-Conception</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed" data-i18n="footer_eco_desc">Ce site web est entièrement optimisé en performance pour consommer le moins d'énergie machine possible lors de sa consultation.</p>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-white/5 text-center flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="text-xs text-gray-500 text-left sm:text-center">
+                    <p>© 2026 ElectroGlass – Tous droits réservés.</p>
+                    <p class="mt-1">Téléphone : <a href="tel:+213540333996" class="hover:text-brand-light">+213 540 33 39 96</a> | Tlemcen, Algérie</p>
+                </div>
+                <div class="flex gap-4 text-xs text-gray-500">
+                    <a href="#" class="hover:text-brand-light" data-i18n="legals">Mentions légales</a>
+                    <a href="#" class="hover:text-brand-light" data-i18n="privacy">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOUTONS FLOTTANTS D'ACTION DE CONTACT -->
+    <!-- Bouton WhatsApp (Bas Gauche) -->
+    <a href="https://wa.me/213540333996" target="_blank" class="fixed bottom-6 left-6 p-3.5 rounded-full bg-emerald-600 text-white shadow-2xl hover:bg-emerald-500 hover:scale-110 active:scale-90 transition-all duration-300 z-50 flex items-center justify-center gap-2">
+        <i data-lucide="message-circle" class="w-6 h-6 animate-pulse"></i>
+        <span class="text-xs font-bold pr-1 md:inline hidden">WhatsApp</span>
+    </a>
+
+    <!-- Commandes d'action en bas à droite (Appel Mobile & Back to Top) -->
+    <div class="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+        <!-- Bouton d'appel mobile direct (Masqué sur ordinateurs) -->
+        <a href="tel:+213540333996" class="p-3.5 rounded-full bg-brand-light text-brand-dark shadow-2xl hover:scale-110 active:scale-90 transition-all duration-300 lg:hidden flex items-center justify-center">
+            <i data-lucide="phone-call" class="w-6 h-6 animate-bounce"></i>
+        </a>
+        
+        <!-- Bouton retour en haut de page -->
+        <button id="backToTopBtn" onclick="scrollToTop()" class="p-3.5 rounded-full bg-brand-light/10 text-brand-light border border-brand-light/30 shadow-xl hover:bg-brand-light hover:text-brand-dark hover:scale-110 active:scale-90 transition-all duration-300 opacity-0 pointer-events-none flex items-center justify-center">
+            <i data-lucide="arrow-up" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- LIGHTBOX POUR LA GALERIE CONCEPTUELLE -->
+    <div id="lightbox" class="fixed inset-0 bg-black/95 z-[100] hidden flex-col justify-center items-center p-4">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-brand-light p-2 transition-transform hover:scale-110">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <div class="max-w-4xl w-full flex flex-col items-center">
+            <img id="lightboxImg" src="" alt="Grand format" class="max-h-[80vh] max-w-full rounded-lg shadow-2xl object-contain border border-white/5">
+            <p id="lightboxCaption" class="text-white mt-4 text-lg font-semibold tracking-wide text-center"></p>
+        </div>
+    </div>
+
+    <!-- SIMULATEUR DE COMPARAISON VIDÉO DYNAMIQUE -->
+    <div id="videoModal" class="fixed inset-0 bg-black/95 z-[100] hidden flex-col justify-center items-center p-4">
+        <button onclick="closeVideoDemo()" class="absolute top-6 right-6 text-white hover:text-brand-light p-2 transition-transform hover:scale-110">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <div class="max-w-4xl w-full aspect-video rounded-2xl overflow-hidden border border-brand-glassBorder glassmorphism flex flex-col items-center justify-center relative p-12">
+            <div id="simulatedVideoScreen" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 filter" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div id="simulatedVideoOverlay" class="absolute inset-0 bg-blue-950/20 transition-all duration-1000"></div>
+            
+            <div class="relative z-10 text-center bg-black/75 p-8 rounded-3xl max-w-md border border-white/10 backdrop-blur-md">
+                <div class="flex items-center justify-center gap-2 text-brand-light mb-4 font-mono text-xs uppercase tracking-widest">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-ping"></span>
+                    <span data-i18n="demo_live_status">Simulation en direct</span>
+                </div>
+                <h4 class="text-2xl font-bold text-white mb-3" data-i18n="demo_adjust_title">Ajustez la lumière</h4>
+                <p class="text-xs text-gray-400 mb-6" data-i18n="demo_adjust_desc">Sélectionnez le mode pour appliquer le courant électrique virtuel et faire transiter le vitrage de l'arrière-plan.</p>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="controlSimulatedVideo(0)" class="py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider transition-all" data-i18n="demo_mode_clear">Mode Clair</button>
+                    <button onclick="controlSimulatedVideo(1)" class="py-2.5 rounded-xl bg-brand-light hover:bg-blue-400 text-brand-dark font-extrabold text-xs uppercase tracking-wider transition-all" data-i18n="demo_mode_dark">Mode Sombre</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= CODE JAVASCRIPT ================= -->
+    <script>
+        // --- TABLES DE TRADUCTION BILINGUE ---
+        const translations = {
+            fr: {
+                nav_quote: "Demander un devis",
+                hero_tag: "L'avenir du vitrage intelligent",
+                hero_title_2: "L'intelligence au service du vitrage",
+                hero_desc: "Contrôlez la lumière, le confort et l'efficacité énergétique grâce au verre électrochromique de pointe.",
+                hero_cta_1: "Découvrir la technologie",
+                hero_cta_2: "Nous contacter",
+                scroll_down: "Faites défiler",
+                features_title: "Pourquoi choisir ElectroGlass ?",
+                features_subtitle: "Le verre électrochromique apporte une réponse optimale aux enjeux architecturaux, thermiques et environnementaux d'aujourd'hui.",
+                feat_1_title: "Réduction de l'éblouissement",
+                feat_1_desc: "Ajustement instantané et automatique de la teinte pour éliminer l'éblouissement sans masquer la vue extérieure.",
+                feat_2_title: "Économies d'énergie",
+                feat_2_desc: "Réduction drastique de la consommation liée à la climatisation et à l'éclairage artificiel (jusqu'à -30%).",
+                feat_3_title: "Confort thermique optimal",
+                feat_3_desc: "Régulation passive du transfert de chaleur solaire pour garder les intérieurs naturellement frais en été et doux en hiver.",
+                feat_4_title: "Design & Pureté épurée",
+                feat_4_desc: "Plus besoin de stores, de rideaux ou de brise-soleil encombrants. Valorisez la pureté architecturale de vos projets.",
+                stat_1_lbl: "Économies d'Énergie",
+                stat_2_lbl: "Filtration des UV",
+                stat_3_lbl: "Réactivité Électrique",
+                stat_4_lbl: "Ans de R&D",
+                perf_tag: "Transition Énergétique",
+                perf_title: "L'efficacité passive au service du climat",
+                perf_desc_1: "Le verre électrochromique n'est pas qu'un élément de design futuriste. Il agit comme un régulateur de flux thermiques dynamique, réduisant de manière passive les charges calorifiques subies par les façades exposées.",
+                perf_point_1_title: "Consommation HVAC réduite de 28%",
+                perf_point_1_desc: "Réduction directe de la consommation électrique des climatiseurs industriels en bloquant l'irradiation infrarouge directe.",
+                perf_point_2_title: "Lumière du jour optimisée",
+                perf_point_2_desc: "Laisse passer la lumière naturelle visible tout en rejette la chaleur invisible, éliminant ainsi le besoin d'éclairage artificiel diurne.",
+                perf_badge: "Calculs d'Ingénierie",
+                perf_bar_1: "Rejet de chaleur solaire (Teinté au Max)",
+                perf_bar_2: "Transmission de lumière visible (Clair)",
+                perf_bar_3: "Filtration des rayons UV",
+                about_tag: "Notre Histoire",
+                about_title: "Pionnier de l'innovation verrière",
+                about_sub_1: "Notre Mission",
+                about_p1: "Fondée avec l'ambition de redéfinir la relation entre l'architecture, la lumière et l'énergie, ElectroGlass conçoit, fabrique et commercialise des solutions de vitrage dynamique intelligent à haute valeur technologique.",
+                about_p2: "Nos technologies électrochromiques exclusives s'intègrent de manière invisible dans les bâtiments du futur pour offrir un confort utilisateur inégalé tout en répondant aux enjeux environnementaux les plus stricts en matière de décarbonation.",
+                about_banner: "Chaque mètre carré de verre ElectroGlass installé contribue directement à la réduction de l'empreinte carbone globale du bâtiment.",
+                about_demo_title: "Simulateur de transition",
+                vision_1_t: "Vision à long terme",
+                vision_1_d: "Devenir le leader mondial de la technologie verrière électroactive en rendant le vitrage intelligent accessible à tous les segments du bâtiment.",
+                vision_2_t: "Innovation continue",
+                vision_2_d: "Investir plus de 20% de nos revenus dans la recherche et le développement de couches nanométriques encore plus performantes.",
+                vision_3_t: "Engagement Planétaire",
+                vision_3_d: "Créer des cycles de production écologiques et valoriser des processus de recyclage intégrés pour l'ensemble de nos vitrages intelligents.",
+                tech_tag: "Comment ça marche",
+                tech_title: "La science de l'électrochromisme",
+                sim_title: "Simulez le vitrage en temps réel",
+                sim_desc: "En appliquant une très faible tension électrique (moins de 5V), les ions lithium se déplacent à travers les couches actives du verre, modifiant de manière contrôlée sa teinte et sa capacité à bloquer l'énergie solaire thermique.",
+                sim_slider_lbl: "Niveau de teinte :",
+                sim_state_clear: "Transparent (Clair)",
+                sim_state_dark: "Teinté (Opaque)",
+                sim_btn_clear: "Effacer la teinte",
+                sim_btn_dark: "Teinter au max",
+                sim_glass_status: "Verre : Actif",
+                sim_feedback_t: "Effet observé :",
+                sim_fb_0: "Visibilité et apport solaire thermique maximisés pour chauffer naturellement l'intérieur.",
+                sim_fb_25: "Léger filtrage solaire, idéal pour un ciel partiellement voilé ou en début de matinée.",
+                sim_fb_50: "Lumière filtrée uniformément. Élimination de la majeure partie de la chaleur directe du soleil.",
+                sim_fb_75: "Forte réduction de la lumière, idéal pour le travail sur écran en plein après-midi.",
+                sim_fb_100: "Opacité maximale pour préserver l'intimité de vos réunions et bloquer la chaleur.",
+                layers_title: "L'architecture nanométrique",
+                layers_desc: "Le vitrage ElectroGlass est constitué de deux feuilles de verre enserrant un empilement de 5 couches invisibles, dont l'épaisseur totale n'excède pas un micron.",
+                layer_1_t: "Couches conductrices transparentes (TCO)",
+                layer_1_d: "Transmettent le courant électrique de manière parfaitement homogène sur toute la surface vitrée.",
+                layer_2_t: "Couche Électrochromique (Matériau Actif)",
+                layer_2_d: "Contient l'oxyde de tungstène qui se teinte sous l'effet de l'insertion d'ions.",
+                layer_3_t: "Électrolyte solide conducteur ionique",
+                layer_3_d: "Facilite le transit rapide des ions lithium lors des phases d'activation/désactivation.",
+                layer_4_t: "Contre-électrode de stockage d'ions",
+                layer_4_d: "Héberge les ions de manière stable lorsque le vitrage est configuré en mode transparent.",
+                diag_title: "Coupe Transversale du Vitrage",
+                diag_legend: "Schéma conceptuel des nanocouches actives. Epaisseur réelle : < 1 micromètre.",
+                apps_tag: "Champs d'application",
+                apps_title: "L'innovation au cœur de vos structures",
+                app_1_title: "Bureaux intelligents & Salles de réunion",
+                app_1_desc: "Passez d'un espace de travail transparent à une salle de conférence totalement isolée visuellement en moins d'une seconde.",
+                app_2_title: "Façades Architecturales Actives",
+                app_2_desc: "Gestion dynamique de la luminosité et du rayonnement thermique des gratte-ciel pour réduire la dépendance à la climatisation.",
+                app_3_title: "Secteur Médical & Hôpitaux",
+                app_3_desc: "Offre une barrière d'intimité stérile et hygiénique, remplaçant idéalement les stores en tissu porteurs d'agents pathogènes.",
+                app_4_title: "Hôtels de Prestige",
+                app_4_desc: "Créez des ambiances immersives de luxe dans les suites d'hôtels grâce à un contrôle domotique de l'intimité et de la lumière.",
+                app_5_title: "Aéroports & Infrastructures publiques",
+                app_5_desc: "Régule la température des immenses halls d'embarquement vitrés tout en évitant l'inconfort visuel des passagers.",
+                app_6_title: "Villas & Résidences d'exception",
+                app_6_desc: "Intégrez la technologie pour vivre en accord parfait avec l'environnement extérieur sans jamais compromettre votre vie privée.",
+                gallery_tag: "Visuels d'exception",
+                gallery_title: "Galerie Technologique & Moléculaire",
+                g_img_1_title: "Régulation Moléculaire",
+                g_img_1_desc: "Teinte Minimale (Tension 0.5V)",
+                g_img_2_title: "Régulation Moléculaire",
+                g_img_2_desc: "Teinte Intermédiaire (Tension 2.5V)",
+                g_img_3_title: "Régulation Moléculaire",
+                g_img_3_desc: "Teinte Maximale (Tension 5V)",
+                g_img_4_title: "Verre Électro-Dépoli",
+                g_img_4_desc: "Contrôle de l'intimité par diffusion lumineuse",
+                g_img_5_title: "Réfraction Contrôlée",
+                g_img_5_desc: "Absorption passive de l'énergie thermique infrarouge",
+                g_img_6_title: "Intégration HUD (Heads-Up)",
+                g_img_6_desc: "Combinaison électrochromique et d'affichage transparent",
+                demo_video_title: "Démonstration technologique",
+                demo_video_desc: "Découvrez en conditions réelles comment nos vitrages s'adaptent instantanément aux variations climatiques.",
+                demo_live_status: "Simulation en direct",
+                demo_adjust_title: "Ajustez la lumière",
+                demo_adjust_desc: "Sélectionnez le mode pour appliquer le courant électrique virtuel et faire transiter le vitrage de l'arrière-plan.",
+                demo_mode_clear: "Mode Clair",
+                demo_mode_dark: "Mode Sombre",
+                contact_tag: "Parlons de votre projet",
+                contact_title: "Nous contacter & Demande de devis",
+                contact_info_title: "ElectroGlass Algérie",
+                contact_info_desc: "Nos ingénieurs et conseillers techniques vous accompagnent de la phase de conception à la pose de vos panneaux électrochromiques. Contactez-nous pour toute étude ou devis sur-mesure.",
+                form_title_contact: "Envoyer un message à ElectroGlass",
+                form_title_quote: "Demander un devis ElectroGlass",
+                form_name: "Nom complet",
+                form_email: "Email",
+                form_phone_user: "Numéro de téléphone",
+                form_subject: "Sujet de votre message",
+                form_message: "Message ou détails du projet",
+                form_agree: "En soumettant ce formulaire, j'accepte que mes informations soient traitées dans le strict respect de la charte de confidentialité d'ElectroGlass.",
+                form_submit_btn: "Envoyer la demande",
+                opt_quote: "Demander un devis personnalisé",
+                opt_info: "Renseignement d'ordre technique",
+                opt_partner: "Proposition de partenariat",
+                success_t: "Message transmis avec succès !",
+                success_d: "Notre équipe commerciale vous contactera dans les plus brefs délais pour étudier votre cahier des charges.",
+                footer_desc: "La technologie verrière intelligente au service de l'architecture éco-responsable de demain.",
+                footer_menu: "Navigation",
+                footer_contact: "Contact",
+                footer_eco: "Éco-Conception",
+                footer_eco_desc: "Ce site web est entièrement optimisé en performance pour consommer le moins d'énergie machine possible lors de sa consultation.",
+                footer_rights: "Tous droits réservés.",
+                legals: "Mentions légales",
+                privacy: "Politique de confidentialité",
+                card_subtitle: "Conception & Intégration de verre électrochromique",
+                card_phone: "Téléphone",
+                card_address: "Adresse",
+                card_btn_call: "Appeler"
+            },
+            en: {
+                nav_quote: "Get a quote",
+                hero_tag: "The future of smart glazing",
+                hero_title_2: "Smart glazing technology",
+                hero_desc: "Control light, heat and energy efficiency with our state-of-the-art electrochromic glass panes.",
+                hero_cta_1: "Discover the Tech",
+                hero_cta_2: "Contact us",
+                scroll_down: "Scroll down",
+                features_title: "Why choose ElectroGlass?",
+                features_subtitle: "Electrochromic glass offers the optimal answer to modern architectural, thermal and environmental challenges.",
+                feat_1_title: "Glare Reduction",
+                feat_1_desc: "Instant and automated tint adjustment to completely block glare while keeping your views pristine.",
+                feat_2_title: "Energy Savings",
+                feat_2_desc: "Drastic reduction in energy costs related to HVAC systems and artificial lighting (up to -30%).",
+                feat_3_title: "Thermal Comfort",
+                feat_3_desc: "Passive solar heat gain regulation to keep spaces naturally cool in summer and warm in winter.",
+                feat_4_title: "Minimalist Design",
+                feat_4_desc: "Forget about bulky mechanical blinds and curtains. Leverage raw architectural beauty.",
+                stat_1_lbl: "Energy Savings",
+                stat_2_lbl: "UV Blocking",
+                stat_3_lbl: "Electrical Reactivity",
+                stat_4_lbl: "Years of R&D",
+                perf_tag: "Energy Transition",
+                perf_title: "Passive efficiency serving the climate",
+                perf_desc_1: "Electrochromic glass is not just a futuristic design element. It acts as a dynamic thermal flux regulator, passively reducing the heat loads suffered by exposed facades.",
+                perf_point_1_title: "HVAC consumption reduced by 28%",
+                perf_point_1_desc: "Direct reduction of the electricity consumption of industrial air conditioners by blocking direct infrared irradiation.",
+                perf_point_2_title: "Optimized daylight",
+                perf_point_2_desc: "Allows visible natural light while rejecting invisible heat, thus eliminating the need for daytime artificial lighting.",
+                perf_badge: "Engineering Calculations",
+                perf_bar_1: "Solar Heat Rejection (Fully Tinted)",
+                perf_bar_2: "Visible Light Transmission (Clear)",
+                perf_bar_3: "UV Rays Filtration",
+                about_tag: "Our Story",
+                about_title: "Pioneering glass innovation",
+                about_sub_1: "Our Mission",
+                about_p1: "Founded with the clear vision to redefine the interface between buildings, natural light and energy, ElectroGlass manufactures advanced, high-performance smart glass systems.",
+                about_p2: "Our exclusive electrochromic layers seamlessly integrate into next-generation designs, providing outstanding human comfort while supporting strict global decarbonization targets.",
+                about_banner: "Every square meter of ElectroGlass actively contributes to reducing a building's overall carbon footprint.",
+                about_demo_title: "Transition Simulator",
+                vision_1_t: "Long-term vision",
+                vision_1_d: "Become the undisputed global leader in electroactive glazing, making smart glass accessible to all building segments.",
+                vision_2_t: "Continuous innovation",
+                vision_2_d: "Reinvesting over 20% of our revenue directly back into advanced nanochemical research and development.",
+                vision_3_t: "Planetary Care",
+                vision_3_d: "Fostering sustainable manufacturing processes and fully integrated recycling workflows for our materials.",
+                tech_tag: "How it works",
+                tech_title: "The science of electrochromism",
+                sim_title: "Simulate smart glass live",
+                sim_desc: "By sending a low voltage electrical charge (less than 5V), lithium ions move through thin film nanolayers, altering tint and solar heat transmittance.",
+                sim_slider_lbl: "Tint opacity level:",
+                sim_state_clear: "Fully Transparent",
+                sim_state_dark: "Fully Opaque",
+                sim_btn_clear: "Make transparent",
+                sim_btn_dark: "Tint to maximum",
+                sim_glass_status: "Glass State: Active",
+                sim_feedback_t: "Visible effect:",
+                sim_fb_0: "Maximum solar heat and daylight. Ideal to naturally warm up the interiors in winter.",
+                sim_fb_25: "Slightly filtered solar rays, perfect for partially cloudy mornings.",
+                sim_fb_50: "Light is uniformly filtered. Most direct infrared solar heat is successfully blocked.",
+                sim_fb_75: "Strong light attenuation. Highly recommended to work on screens under direct afternoon light.",
+                sim_fb_100: "Maximum opacity. Absolute visual privacy and perfect thermal barrier.",
+                layers_title: "Nanometric Architecture",
+                layers_desc: "An ElectroGlass window features two glass panels bounding an ultra-thin 5-layer stack smaller than 1 micrometer.",
+                layer_1_t: "Transparent Conductive Oxides (TCO)",
+                layer_1_d: "Ensures perfectly uniform electrical current flow across the entire pane surface.",
+                layer_2_t: "Electrochromic layer (Active material)",
+                layer_2_d: "Contains tungsten trioxide which darkens as ions insert.",
+                layer_3_t: "Solid state electrolyte",
+                layer_3_d: "Allows fast and flawless transport of lithium ions during transition phases.",
+                layer_4_t: "Ion storage counter-electrode",
+                layer_4_d: "Holds and safely stores ions while glass is kept clear.",
+                diag_title: "Glass Cross-Section",
+                diag_legend: "Conceptual representation of layers. Real depth is under 1 micrometer.",
+                apps_tag: "Where to apply",
+                apps_title: "Innovation embedded in structures",
+                app_1_title: "Smart Offices & Meeting Rooms",
+                app_1_desc: "Switch from an open workspace to an absolute private room in under a second.",
+                app_2_title: "Active Architectural Facades",
+                app_2_desc: "Dynamic glass facades regulating skylight brightness and massive heat transfers in skyscrapers.",
+                app_3_title: "Medical & Hospital Sectors",
+                app_3_desc: "A sterile, touch-free solution replacing dust-collecting fabric curtains and standard window blinds.",
+                app_4_title: "Luxury Hotels",
+                app_4_desc: "Delivering bespoke, premium smart-home automated atmospheres for hotel suites.",
+                app_5_title: "Airports & Travel Hubs",
+                app_5_desc: "Smooth heat control across vast open glazed terminals, ensuring constant passenger satisfaction.",
+                app_6_title: "Luxury Homes & Villas",
+                app_6_desc: "Unite with beautiful surrounding nature without ever giving up your absolute privacy.",
+                gallery_tag: "Immersive gallery",
+                gallery_title: "Technological & Molecular Gallery",
+                g_img_1_title: "Molecular Regulation",
+                g_img_1_desc: "Minimal Tint (0.5V Applied)",
+                g_img_2_title: "Molecular Regulation",
+                g_img_2_desc: "Medium Tint (2.5V Applied)",
+                g_img_3_title: "Molecular Regulation",
+                g_img_3_desc: "Maximum Tint (5V Applied)",
+                g_img_4_title: "Electro-Frosted Glass",
+                g_img_4_desc: "Privacy control by scattering direct light rays",
+                g_img_5_title: "Controlled Solar Refraction",
+                g_img_5_desc: "Passive absorption of invisible solar infrared heat",
+                g_img_6_title: "Heads-Up HUD Glass Concept",
+                g_img_6_desc: "Synergy of smart tinting and thin film active projection displays",
+                demo_video_title: "Technological demonstration",
+                demo_video_desc: "Experience how our custom active glass panes regulate light transmission instantly in live scenarios.",
+                demo_live_status: "Live Simulation",
+                demo_adjust_title: "Adjust Glare",
+                demo_adjust_desc: "Select a control mode below to apply custom high-tech background ion states.",
+                demo_mode_clear: "Clear Mode",
+                demo_mode_dark: "Tinted Mode",
+                contact_tag: "Discuss your project",
+                contact_title: "Contact & Quote Request",
+                contact_info_title: "ElectroGlass Algeria",
+                contact_info_desc: "Our specialized engineering crew guides you from basic blue-printing to final onsite installation. Contact us for custom sizing and tailored studies.",
+                form_title_contact: "Send a message to ElectroGlass",
+                form_title_quote: "Request an ElectroGlass Quote",
+                form_name: "Full name",
+                form_email: "Email address",
+                form_phone_user: "Phone number",
+                form_subject: "Sujet / Subject",
+                form_message: "Message / Project details",
+                form_agree: "By submitting this form, I agree that my details are stored safely in accordance with ElectroGlass privacy policy.",
+                form_submit_btn: "Submit inquiry",
+                opt_quote: "Get a personalized quote",
+                opt_info: "Technical inquiry",
+                opt_partner: "Partnership proposal",
+                success_t: "Message successfully sent!",
+                success_d: "Our commercial desk will reach back to you in under 24 hours to analyze your architectural plans.",
+                footer_desc: "Smart glass systems driving ecological and sustainable architecture worldwide.",
+                footer_menu: "Links",
+                footer_contact: "Support",
+                footer_eco: "Eco-Designed website",
+                footer_eco_desc: "This website has been optimized to generate the absolute lowest CPU/GPU energy consumption while reading.",
+                footer_rights: "All rights reserved.",
+                legals: "Legal terms",
+                privacy: "Privacy policy",
+                card_subtitle: "Design & Integration of Electrochromic Glass",
+                card_phone: "Phone",
+                card_address: "Address",
+                card_btn_call: "Call"
+            }
+        };
+
+        // --- ÉTAT GLOBAL DE L'APPLICATION ---
+        let currentLanguage = 'fr';
+
+        // --- CONTRÔLES DE LANGUE ---
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'fr' ? 'en' : 'fr';
+            document.documentElement.lang = currentLanguage;
+            applyTranslations();
+            updateLanguageButtons();
+        }
+
+        function applyTranslations() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLanguage][key]) {
+                    el.innerText = translations[currentLanguage][key];
+                }
+            });
+            updateSimulationFeedback(document.getElementById('tintRange').value);
+        }
+
+        function updateLanguageButtons() {
+            const btnText = currentLanguage === 'fr' ? 'EN' : 'FR';
+            const desktopSpan = document.getElementById('langBtn').querySelector('span');
+            if (desktopSpan) desktopSpan.innerText = btnText;
+            
+            const mobileSpan = document.getElementById('langBtnMobile');
+            if (mobileSpan) mobileSpan.innerText = btnText;
+        }
+
+        // --- SYSTÈME DE ROUTAGE DE TYPE SPA ---
+        function navigateTo(pageId, modifier = null) {
+            // Masquer toutes les sections de page
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Afficher la page active
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Mettre à jour les liens de navigation (Desktop)
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.getAttribute('data-nav') === pageId) {
+                    link.classList.add('text-brand-light', 'border-b-2', 'border-brand-light');
+                    link.classList.remove('text-gray-300', 'hover:text-white');
+                } else {
+                    link.classList.remove('text-brand-light', 'border-b-2', 'border-brand-light');
+                    link.classList.add('text-gray-300', 'hover:text-white');
+                }
+            });
+
+            // Mettre à jour les liens de navigation (Mobile)
+            document.querySelectorAll('[data-nav-mobile]').forEach(link => {
+                if (link.getAttribute('data-nav-mobile') === pageId) {
+                    link.classList.add('text-brand-light', 'bg-brand-dark/40');
+                    link.classList.remove('text-gray-300');
+                } else {
+                    link.classList.remove('text-brand-light', 'bg-brand-dark/40');
+                    link.classList.add('text-gray-300');
+                }
+            });
+
+            // Fermer le menu mobile s'il est ouvert
+            document.getElementById('mobileMenu').classList.add('hidden');
+
+            // Gérer les surcharges de routage (Devis prérempli avec informations demandées)
+            if (pageId === 'contact' && modifier === 'devis') {
+                const formHeader = document.getElementById('formHeader');
+                const formSubject = document.getElementById('formSubject');
+                const formMessageText = document.getElementById('formMessageText');
+                
+                if (formHeader && formSubject) {
+                    formSubject.value = 'devis';
+                    formHeader.setAttribute('data-i18n', 'form_title_quote');
+                    formHeader.innerText = translations[currentLanguage]['form_title_quote'];
+                }
+                
+                if (formMessageText) {
+                    formMessageText.value = currentLanguage === 'fr' 
+                        ? "Bonjour, je souhaite obtenir un devis personnalisé pour mon projet de vitrage intelligent ElectroGlass. Vous pouvez me joindre au numéro indiqué dans mes coordonnées. Merci de me recontacter." 
+                        : "Hello, I would like to get a personalized quote for my ElectroGlass smart glass project. You can reach me at the phone number provided in my details. Please contact me back.";
+                }
+
+                setTimeout(() => {
+                    const nameField = document.getElementById('formName');
+                    if (nameField) nameField.focus();
+                }, 100);
+            } else if (pageId === 'contact') {
+                const formHeader = document.getElementById('formHeader');
+                if (formHeader) {
+                    formHeader.setAttribute('data-i18n', 'form_title_contact');
+                    formHeader.innerText = translations[currentLanguage]['form_title_contact'];
+                }
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- MENU BOUTONS MOBILE ---
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // --- COMPORTEMENT SCROLL ET HEADER ---
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTopBtn');
+            const header = document.querySelector('header');
+            
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-xl', 'bg-[#030a16]/95');
+                header.classList.remove('bg-transparent');
+            } else {
+                header.classList.remove('shadow-xl', 'bg-[#030a16]/95');
+                header.classList.add('bg-transparent');
+            }
+
+            if (window.scrollY > 400) {
+                btn.classList.remove('opacity-0', 'pointer-events-none');
+                btn.classList.add('opacity-100');
+            } else {
+                btn.classList.add('opacity-0', 'pointer-events-none');
+                btn.classList.remove('opacity-100');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- CONTRÔLE DE LA FENÊTRE DE SIMULATION DE TEINTE ---
+        const tintRange = document.getElementById('tintRange');
+        const interactiveGlass = document.getElementById('interactiveGlass');
+        const tintPercentText = document.getElementById('tintPercent');
+
+        if (tintRange) {
+            tintRange.addEventListener('input', (e) => {
+                const val = e.target.value;
+                setSimulationTint(val);
+            });
+        }
+
+        function setSimulationTint(val) {
+            if (!tintRange) return;
+            tintRange.value = val;
+            tintPercentText.innerText = `${val}%`;
+            
+            // Calculs de transparence progressive
+            const alpha = (val / 100) * 0.93; 
+            const blurVal = (val / 100) * 8; 
+
+            interactiveGlass.style.backgroundColor = `rgba(11, 31, 58, ${alpha})`;
+            interactiveGlass.style.backdropFilter = `blur(${blurVal}px)`;
+            interactiveGlass.style.webkitBackdropFilter = `blur(${blurVal}px)`;
+
+            updateSimulationFeedback(val);
+        }
+
+        function updateSimulationFeedback(val) {
+            const feedbackEl = document.getElementById('simulationFeedback');
+            if (!feedbackEl) return;
+            if (val == 0) {
+                feedbackEl.setAttribute('data-i18n', 'sim_fb_0');
+                feedbackEl.innerText = translations[currentLanguage]['sim_fb_0'];
+            } else if (val > 0 && val <= 30) {
+                feedbackEl.setAttribute('data-i18n', 'sim_fb_25');
+                feedbackEl.innerText = translations[currentLanguage]['sim_fb_25'];
+            } else if (val > 30 && val <= 65) {
+                feedbackEl.setAttribute('data-i18n', 'sim_fb_50');
+                feedbackEl.innerText = translations[currentLanguage]['sim_fb_50'];
+            } else if (val > 65 && val <= 90) {
+                feedbackEl.setAttribute('data-i18n', 'sim_fb_75');
+                feedbackEl.innerText = translations[currentLanguage]['sim_fb_75'];
+            } else {
+                feedbackEl.setAttribute('data-i18n', 'sim_fb_100');
+                feedbackEl.innerText = translations[currentLanguage]['sim_fb_100'];
+            }
+        }
+
+        // --- ENVOI DE FORMULAIRE ---
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('contactForm');
+            const successMsg = document.getElementById('formSuccess');
+            
+            successMsg.classList.remove('hidden');
+            form.reset();
+
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 8000);
+        }
+
+        // --- LIGHTBOX DE LA GALERIE ---
+        function openLightbox(imgSrc, captionText) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+
+            lightboxImg.src = imgSrc;
+            lightboxCaption.innerText = captionText;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+        }
+
+        // --- MODAL DE DÉMONSTRATION VIDÉO ---
+        function openVideoDemo() {
+            const modal = document.getElementById('videoModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Mode Clair / Sombre interactif simulant le verre de la vidéo
+        function closeVideoDemo() {
+            const modal = document.getElementById('videoModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function controlSimulatedVideo(mode) {
+            const screen = document.getElementById('simulatedVideoScreen');
+            const overlay = document.getElementById('simulatedVideoOverlay');
+            if (mode === 0) {
+                screen.style.filter = "contrast(100%) brightness(100%)";
+                overlay.style.backgroundColor = "rgba(11, 31, 58, 0.1)";
+            } else {
+                screen.style.filter = "contrast(115%) brightness(40%)";
+                overlay.style.backgroundColor = "rgba(11, 31, 58, 0.85)";
+            }
+        }
+
+        // --- CYCLE DE VIE (INITIALISATION DES COMPOSANTS) ---
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            applyTranslations();
+        });
+    </script>
+</body>
+</html>
